@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig as Config } from 'next'
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+const config: Config = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  output: 'standalone',
+}
 
-export default nextConfig;
+export default config

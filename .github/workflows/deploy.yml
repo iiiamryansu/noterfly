@@ -1,0 +1,61 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: ${{ secrets.APP_NAME }}
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      IMAGE: '${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}:${{ github.sha }}'
+      SERVER_DOMAIN: ${{ secrets.SERVER_DOMAIN }}
+      SERVER_KEY: ${{ secrets.SERVER_KEY }}
+      SERVER_PORT: ${{ secrets.SERVER_PORT }}
+      SERVER_USER: ${{ secrets.SERVER_USER }}
+      TAG: ${{ github.sha }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          EXISTING_IMAGE=$(curl -s -o /dev/null -w "%{http_code}" https://registry.hub.docker.com/v2/repositories/$DOCKER_HUB_USERNAME/$APP_NAME/tags/$TAG)
+
+          if [ $EXISTING_IMAGE -eq 200 ]; then
+            echo "Image with tag $TAG already exists, skipping build."
+          else
+            docker build -t $IMAGE .
+            docker push $IMAGE
+          fi
+
+      - name: Connect to server and deploy
+        run: |
+          echo "$SERVER_KEY" > server_key && chmod 600 server_key
+
+          ssh -o StrictHostKeyChecking=no -o BatchMode=yes -i server_key -p $SERVER_PORT $SERVER_USER@$SERVER_DOMAIN '
+            docker pull '"$IMAGE"';
+
+            if [ $(docker ps -aq -f name='"$APP_NAME"') ]; then
+              docker stop '"$APP_NAME"' && docker rm '"$APP_NAME"';
+            fi
+
+            docker run -d \
+              -p 3000:3000 \
+              --name '"$APP_NAME"' \
+              '"$IMAGE"';
+          '
+
+          echo "Deployment completed successfully! 🎉"

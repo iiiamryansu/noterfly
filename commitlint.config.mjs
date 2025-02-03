@@ -1,7 +1,5 @@
 const config = {
-  plugins: {
-    tailwindcss: {},
-  },
+  extends: ['gitmoji'],
 }
 
 export default config
