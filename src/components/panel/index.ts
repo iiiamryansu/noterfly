@@ -1,0 +1,6 @@
+export { ControlPanel } from '~/components/panel/ControlPanel'
+export { LogoPanel } from '~/components/panel/LogoPanel'
+export { MenuPanel } from '~/components/panel/MenuPanel'
+export { NavigationPanel } from '~/components/panel/NavigationPanel'
+export { NotebookPanel } from '~/components/panel/NotebookPanel'
+export { UserPanel } from '~/components/panel/UserPanel'

@@ -6,10 +6,13 @@
     "bunx",
     "commitlint",
     "gitmoji",
+    "Headbar",
     "heroui",
+    "hugeicons",
     "nextjs",
     "noterfly",
     "turbopack",
     "vercel"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
