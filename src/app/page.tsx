@@ -1,7 +1,15 @@
+'use client'
+
+import { Button } from '@heroui/button'
+import { useTheme } from 'next-themes'
+
 export default function RootPage() {
+  const { setTheme, theme } = useTheme()
+
   return (
-    <main className="flex h-full items-center justify-center bg-zinc-100">
-      <h1 className="text-3xl font-bold text-zinc-900">Noterfly</h1>
+    <main className="flex h-full flex-col items-center justify-center gap-8 bg-background">
+      <h1 className="text-3xl font-bold text-primary-900">Noterfly</h1>
+      <Button onPress={() => setTheme(theme === 'light' ? 'dark' : 'light')}>{theme === 'light' ? 'Light' : 'Dark'}</Button>
     </main>
   )
 }
