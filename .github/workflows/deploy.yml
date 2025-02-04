@@ -58,7 +58,7 @@ jobs:
             fi
 
             docker run -d \
-              -e DATABASE_URL='"$DATABASE_URL"' \
+              -e DATABASE_URL='"'$DATABASE_URL'"' \
               -p 3000:3000 \
               --name '"$APP_NAME"' \
               '"$IMAGE"';
