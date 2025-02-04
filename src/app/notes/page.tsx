@@ -2,11 +2,26 @@
 
 import type { Note } from '@prisma/client'
 
-import { Button, Chip, Divider, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
+import {
+  Button,
+  Chip,
+  Divider,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from '@heroui/react'
 import { format, formatDistanceToNow, isThisYear } from 'date-fns'
 import {
   DashboardSquare01Icon,
   DashboardSquare03Icon,
+  Delete01Icon,
   ListViewIcon,
   MoreHorizontalCircle02Icon,
   MoreHorizontalIcon,
@@ -18,6 +33,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 
+import { deleteNoteById } from '~/actions/note'
 import { useNotes } from '~/contexts'
 
 const columns = [
@@ -36,9 +52,28 @@ export default function NotesPage() {
     switch (columnKey) {
       case 'actions': {
         return (
-          <Button isIconOnly size="sm" variant="light">
-            <MoreHorizontalIcon className="size-4 text-default-500" />
-          </Button>
+          <Dropdown
+            classNames={{
+              content: ['min-w-32'],
+            }}
+          >
+            <DropdownTrigger>
+              <Button isIconOnly size="sm" variant="light">
+                <MoreHorizontalIcon className="size-4 text-default-500" />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu>
+              <DropdownItem
+                className="text-danger"
+                color="danger"
+                endContent={<Delete01Icon className="size-4" />}
+                key="delete"
+                onPress={() => deleteNoteById(note.id)}
+              >
+                Delete
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         )
       }
 
