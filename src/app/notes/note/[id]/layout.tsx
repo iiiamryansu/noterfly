@@ -9,5 +9,5 @@ export default function NoteLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return children
+  return <div className="row-span-2 h-full">{children}</div>
 }

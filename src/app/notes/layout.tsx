@@ -9,5 +9,5 @@ export default function NotesLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return children
+  return <div className="grid h-full grid-cols-1 grid-rows-[128px_1fr]">{children}</div>
 }

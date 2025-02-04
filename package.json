@@ -21,6 +21,7 @@
     "@prisma/client": "^6.3.0",
     "better-auth": "^1.1.15",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.0.8",
     "hugeicons-react": "^0.3.0",
     "next": "15.1.6",
