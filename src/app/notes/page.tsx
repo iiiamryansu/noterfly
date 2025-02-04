@@ -1,5 +1,7 @@
 'use client'
 
+import type { Note } from '@prisma/client'
+
 import { Button, Chip, Divider, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
 import { format, formatDistanceToNow, isThisYear } from 'date-fns'
 import {
@@ -16,7 +18,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 
-import { type Note, notebooks, notes } from '~/mocks'
+import { useNotes } from '~/contexts'
 
 const columns = [
   { name: 'Title', uid: 'title' },
@@ -26,6 +28,8 @@ const columns = [
 ]
 
 export default function NotesPage() {
+  const { notes } = useNotes()
+
   const router = useRouter()
 
   const renderCell = useCallback((note: Note, columnKey: React.Key): React.ReactNode => {
@@ -41,7 +45,8 @@ export default function NotesPage() {
       case 'notebookId': {
         return (
           <Chip className="h-5 select-none text-[10px]" size="sm" variant="flat">
-            {getNotebookTitle(note.notebookId)}
+            {/* {getNotebookTitle(note.notebookId)} */}
+            Placeholder
           </Chip>
         )
       }
@@ -157,6 +162,6 @@ export default function NotesPage() {
   )
 }
 
-function getNotebookTitle(notebookId: string): string {
-  return notebooks.find((notebook) => notebook.id === notebookId)?.title ?? 'Unsorted'
-}
+// function getNotebookTitle(notebookId: string): string {
+//   return notebooks.find((notebook) => notebook.id === notebookId)?.title ?? 'Unsorted'
+// }

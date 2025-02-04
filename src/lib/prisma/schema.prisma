@@ -25,6 +25,8 @@ model User {
   sessions Session[]
   accounts Account[]
 
+  notes Note[]
+
   createdAt DateTime
   updatedAt DateTime
 
@@ -83,4 +85,19 @@ model Verification {
   updatedAt DateTime?
 
   @@map("verification")
+}
+
+model Note {
+  id String @id @default(uuid())
+
+  title   String
+  content String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("note")
 }
