@@ -4,7 +4,11 @@ import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, 
 import { ArrowDown01Icon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } from 'hugeicons-react'
 import { useRouter } from 'next/navigation'
 
+import { signOut, useSession } from '~/lib/auth/client'
+
 export function UserPanel() {
+  const { data: session } = useSession()
+
   const router = useRouter()
 
   return (
@@ -21,7 +25,9 @@ export function UserPanel() {
             disableRipple
             endContent={<ArrowDown01Icon className="size-4" />}
             size="sm"
-            startContent={<Avatar className="max-h-6 max-w-6" radius="sm" size="sm" src="default/avatar.svg" />}
+            startContent={
+              <Avatar className="max-h-6 max-w-6" radius="sm" size="sm" src={session?.user?.image ?? 'default/avatar.svg'} />
+            }
             variant="light"
           >
             Default
@@ -44,14 +50,14 @@ export function UserPanel() {
                 avatarProps={{
                   radius: 'sm',
                   size: 'sm',
-                  src: 'default/avatar.svg',
+                  src: session?.user?.image ?? 'default/avatar.svg',
                 }}
                 classNames={{
                   description: 'text-default-500',
                   name: 'text-default-700',
                 }}
-                description="@default"
-                name="Default"
+                description={`@${session?.user?.username ?? 'default'}`}
+                name={session?.user?.name ?? 'Default'}
               />
             </DropdownItem>
             <DropdownItem
@@ -68,8 +74,17 @@ export function UserPanel() {
               className="data-[hover=true]:text-danger-500"
               endContent={<LogoutSquare01Icon className="size-4" />}
               key="logout"
+              onPress={async () => {
+                await signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      router.push('/auth/sign-in')
+                    },
+                  },
+                })
+              }}
             >
-              Log Out
+              Sign Out
             </DropdownItem>
           </DropdownSection>
         </DropdownMenu>

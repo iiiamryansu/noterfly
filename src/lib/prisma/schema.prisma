@@ -14,17 +14,73 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+  id String @id
+
+  name          String
+  username      String
+  email         String
+  emailVerified Boolean
+  image         String?
+
+  sessions Session[]
+  accounts Account[]
+
+  createdAt DateTime
+  updatedAt DateTime
+
+  @@unique([email])
+  @@map("user")
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
+model Session {
+  id String @id
+
+  token     String
+  ipAddress String?
+  userAgent String?
+  expiresAt DateTime
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime
+  updatedAt DateTime
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id String @id
+
+  accountId             String
+  providerId            String
+  idToken               String?
+  scope                 String?
+  password              String?
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime
+  updatedAt DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id String @id
+
+  identifier String
+  value      String
+  expiresAt  DateTime
+
+  createdAt DateTime?
+  updatedAt DateTime?
+
+  @@map("verification")
 }

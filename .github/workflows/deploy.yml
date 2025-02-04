@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_NAME: ${{ secrets.APP_NAME }}
+      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+      BETTER_AUTH_URL: ${{ secrets.BETTER_AUTH_URL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       IMAGE: '${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}:${{ github.sha }}'
@@ -40,6 +42,8 @@ jobs:
           else
             docker build \
             --build-arg DATABASE_URL="$DATABASE_URL" \
+            --build-arg BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET" \
+            --build-arg BETTER_AUTH_URL="$BETTER_AUTH_URL" \
             -t $IMAGE \
             .
 
@@ -59,6 +63,8 @@ jobs:
 
             docker run -d \
               -e DATABASE_URL='"'$DATABASE_URL'"' \
+              -e BETTER_AUTH_SECRET='"'$BETTER_AUTH_SECRET'"' \
+              -e BETTER_AUTH_URL='"'$BETTER_AUTH_URL'"' \
               -p 3000:3000 \
               --name '"$APP_NAME"' \
               '"$IMAGE"';
