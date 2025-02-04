@@ -19,6 +19,12 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+ARG DATABASE_URL
+
+ENV DATABASE_URL=${DATABASE_URL}
+
+RUN bunx prisma generate
+
 RUN \
   if [ -f bun.lock ]; then bun run build; \
   else echo "Lockfile not found." && exit 1; \

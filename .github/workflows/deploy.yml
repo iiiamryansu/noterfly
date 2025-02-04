@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_NAME: ${{ secrets.APP_NAME }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       IMAGE: '${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}:${{ github.sha }}'
       SERVER_DOMAIN: ${{ secrets.SERVER_DOMAIN }}
@@ -37,7 +38,11 @@ jobs:
           if [ $EXISTING_IMAGE -eq 200 ]; then
             echo "Image with tag $TAG already exists, skipping build."
           else
-            docker build -t $IMAGE .
+            docker build \
+            --build-arg DATABASE_URL="$DATABASE_URL" \
+            -t $IMAGE \
+            .
+
             docker push $IMAGE
           fi
 
@@ -53,6 +58,7 @@ jobs:
             fi
 
             docker run -d \
+              -e DATABASE_URL='"$DATABASE_URL"' \
               -p 3000:3000 \
               --name '"$APP_NAME"' \
               '"$IMAGE"';
