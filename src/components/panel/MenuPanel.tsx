@@ -11,7 +11,7 @@ export function MenuPanel() {
     <section className="flex flex-col gap-1">
       <Button
         className="justify-start"
-        onPress={() => router.push('/')}
+        onPress={() => router.push('/home')}
         size="sm"
         startContent={<Home01Icon className="size-4" />}
         variant="light"
