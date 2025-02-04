@@ -3,10 +3,11 @@
 import type { Note } from '@prisma/client'
 
 import { EditorContent, useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
 import { debounce } from 'lodash-es'
 
 import { updateNoteById } from '~/actions/note'
+import { extensions } from '~/components/editor/extensions'
+import { TextMenu as EditorTextMenu } from '~/components/editor/menus/TextMenu'
 
 const saveContent = debounce((noteId: string, newContent: string) => {
   updateNoteById(noteId, { content: newContent })
@@ -20,7 +21,7 @@ export function Editor({ note }: { note: Note }) {
         class: 'prose prose-stone dark:prose-invert',
       },
     },
-    extensions: [StarterKit],
+    extensions,
     immediatelyRender: true,
     onUpdate: ({ editor }) => {
       handleChange(JSON.stringify(editor.getJSON()))
@@ -31,7 +32,12 @@ export function Editor({ note }: { note: Note }) {
     saveContent(note.id, newContent)
   }
 
-  return <EditorContent editor={editor} />
+  return (
+    <>
+      <EditorContent editor={editor} />
+      <EditorTextMenu editor={editor} />
+    </>
+  )
 }
 
 function generateContent(rawContent: string) {

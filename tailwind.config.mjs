@@ -29,6 +29,29 @@ const config = {
       },
     }),
   ],
+  theme: {
+    extend: {
+      typography: () => ({
+        DEFAULT: {
+          css: {
+            code: {
+              '&::after': {
+                display: 'none',
+              },
+              '&::before': {
+                display: 'none',
+              },
+              'backgroundColor': 'rgba(135,131,120,.15)',
+              'borderRadius': '4px',
+              'color': '#eb5757',
+              'fontSize': '85%',
+              'padding': '0.2em 0.4em',
+            },
+          },
+        },
+      }),
+    },
+  },
 }
 
 export default config

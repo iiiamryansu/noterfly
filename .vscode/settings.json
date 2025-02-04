@@ -5,6 +5,8 @@
     "Buildx",
     "bunx",
     "commitlint",
+    "Dropcursor",
+    "Gapcursor",
     "gitmoji",
     "Headbar",
     "heroui",
