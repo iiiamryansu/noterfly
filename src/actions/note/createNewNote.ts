@@ -12,7 +12,7 @@ export async function createNewNote(): Promise<void> {
   if (user) {
     const newNote = await prisma.note.create({
       data: {
-        content: 'Hello, world! 🌏',
+        content: `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Hello, world! 🌏"}]}]}`,
         title: 'New Note',
         userId: user.id,
       },

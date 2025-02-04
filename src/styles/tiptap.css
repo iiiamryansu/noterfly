@@ -1,0 +1,8 @@
+.tiptap {
+  margin: 0 auto;
+  outline: none;
+  padding-bottom: 128px;
+  width: 100%;
+  max-width: 800px;
+  height: 100%;
+}
