@@ -1,0 +1,28 @@
+{
+  "Layout": {
+    "Sidebar": {
+      "NavigationPanel": {
+        "all-notes": "所有笔记",
+        "calendar": "日历",
+        "tasks": "任务",
+        "starred": "书签",
+        "my-template": "我的模版",
+        "settings": "设置"
+      },
+      "MenuPanel": {
+        "home": "首页",
+        "new-note": "新的笔记"
+      },
+      "ControlPanel": {
+        "help-center": "帮助中心"
+      },
+      "UserPanel": {
+        "profile": "个人档案",
+        "sign-out": "登出"
+      }
+    }
+  },
+  "WelcomePage": {
+    "announcement": "Noterfly v1.0.0 即将登场，敬请期待"
+  }
+}

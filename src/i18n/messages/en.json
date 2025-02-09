@@ -1,0 +1,28 @@
+{
+  "Layout": {
+    "Sidebar": {
+      "NavigationPanel": {
+        "all-notes": "All notes",
+        "calendar": "Calendar",
+        "tasks": "Tasks",
+        "starred": "Starred",
+        "my-template": "My templates",
+        "settings": "Settings"
+      },
+      "MenuPanel": {
+        "home": "Home",
+        "new-note": "New Note"
+      },
+      "ControlPanel": {
+        "help-center": "Help Center"
+      },
+      "UserPanel": {
+        "profile": "Profile",
+        "sign-out": "Sign Out"
+      }
+    }
+  },
+  "WelcomePage": {
+    "announcement": "Noterfly v1.0.0 will be available soon"
+  }
+}

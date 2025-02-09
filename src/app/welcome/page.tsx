@@ -3,6 +3,7 @@
 import { CursorArrowRaysIcon } from '@heroicons/react/24/outline'
 import { Button, Chip } from '@heroui/react'
 import { GithubIcon } from 'hugeicons-react'
+import { useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,6 +17,8 @@ export default function WelcomePage() {
 
   const router = useRouter()
 
+  const t = useTranslations('WelcomePage')
+
   useEffect(() => {
     setColor(theme === 'light' ? '#1E1E1E' : '#F6F6F6')
   }, [theme])
@@ -24,7 +27,7 @@ export default function WelcomePage() {
     <div className="relative h-full">
       <div className="flex h-full flex-col items-center justify-center gap-6">
         <Chip className="select-none" color="warning" size="sm" variant="dot">
-          Noterfly v1.0.0 will be available soon
+          {t('announcement')}
         </Chip>
 
         <header className="flex flex-col gap-8">

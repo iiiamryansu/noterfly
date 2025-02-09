@@ -2,12 +2,15 @@
 
 import { Button } from '@heroui/react'
 import { Home01Icon, Note01Icon } from 'hugeicons-react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 import { createNewNote } from '~/actions/note'
 
 export function MenuPanel() {
   const router = useRouter()
+
+  const t = useTranslations('Layout.Sidebar.MenuPanel')
 
   return (
     <section className="flex flex-col gap-1">
@@ -18,7 +21,7 @@ export function MenuPanel() {
         startContent={<Home01Icon className="size-4" />}
         variant="light"
       >
-        Home
+        {t('home')}
       </Button>
       <Button
         className="justify-start"
@@ -27,7 +30,7 @@ export function MenuPanel() {
         startContent={<Note01Icon className="size-4" />}
         variant="light"
       >
-        New note
+        {t('new-note')}
       </Button>
     </section>
   )

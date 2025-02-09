@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 
+import { getLocale } from 'next-intl/server'
 import { Poppins } from 'next/font/google'
 
-import { AppLayout, AppProvider } from '~/components/global'
+import { AppLayout, AppProvider, NextIntlProvider } from '~/components/global'
 import '~/styles/global.css'
 
 const poppins = Poppins({
@@ -17,17 +18,21 @@ export const metadata: Metadata = {
   title: 'Noterfly',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getLocale()
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={poppins.className}>
-        <AppProvider>
-          <AppLayout>{children}</AppLayout>
-        </AppProvider>
+        <NextIntlProvider>
+          <AppProvider>
+            <AppLayout>{children}</AppLayout>
+          </AppProvider>
+        </NextIntlProvider>
       </body>
     </html>
   )

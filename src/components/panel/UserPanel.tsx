@@ -2,6 +2,7 @@
 
 import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, User } from '@heroui/react'
 import { ArrowDown01Icon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } from 'hugeicons-react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 import { signOut, useSession } from '~/lib/auth/client'
@@ -10,6 +11,8 @@ export function UserPanel() {
   const { data: session } = useSession()
 
   const router = useRouter()
+
+  const t = useTranslations('Layout.Sidebar.UserPanel')
 
   return (
     <section className="flex justify-between">
@@ -66,7 +69,7 @@ export function UserPanel() {
               key="profile"
               onPress={() => router.push('/profile')}
             >
-              Profile
+              {t('profile')}
             </DropdownItem>
           </DropdownSection>
           <DropdownSection>
@@ -84,7 +87,7 @@ export function UserPanel() {
                 })
               }}
             >
-              Sign Out
+              {t('sign-out')}
             </DropdownItem>
           </DropdownSection>
         </DropdownMenu>
