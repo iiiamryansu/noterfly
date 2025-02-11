@@ -18,6 +18,7 @@ import {
 import { cn } from '~/utils'
 
 import ColorSelector from './color-selector'
+import TypeSelector from './type-selector'
 
 export function TextMenu({ editor }: { editor: Editor | null }) {
   if (editor === null) return null
@@ -25,6 +26,10 @@ export function TextMenu({ editor }: { editor: Editor | null }) {
   return (
     <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }} updateDelay={100}>
       <nav className="inline-flex items-center gap-1 rounded-lg border border-divider/30 bg-[#ffffff] p-1 shadow-sm dark:bg-[#252525]">
+        <TypeSelector editor={editor} />
+
+        <Divider className="h-5 bg-divider" orientation="vertical" />
+
         <Button
           className="!size-7 min-h-7 min-w-7"
           disableAnimation

@@ -71,3 +71,63 @@
   --editor-background-pink: rgb(78, 44, 60);
   --editor-background-red: rgb(82, 46, 42);
 }
+
+/* ------------------------------ Bulleted list ----------------------------- */
+.tiptap {
+  ul {
+    p {
+      @apply m-0 whitespace-pre-wrap break-words;
+    }
+  }
+}
+
+/* ------------------------------ Numbered list ----------------------------- */
+.tiptap {
+  ol {
+    p {
+      @apply m-0 whitespace-pre-wrap break-words;
+    }
+  }
+}
+
+/* ------------------------------- To-do list ------------------------------- */
+.tiptap {
+  ul[data-type='taskList'] {
+    @apply list-none p-0;
+
+    p {
+      @apply m-0 whitespace-pre-wrap break-words;
+    }
+
+    li {
+      @apply flex items-start;
+
+      > label {
+        @apply relative mr-2 mt-[0.3em] size-4 shrink-0 cursor-pointer select-none rounded-[3px] border border-default-300;
+
+        input[type='checkbox'] {
+          @apply absolute size-full cursor-pointer opacity-0;
+        }
+      }
+
+      > div {
+        @apply mb-0 flex-auto;
+      }
+
+      &[data-checked='true'] {
+        > div > p {
+          @apply text-default-500 line-through;
+        }
+
+        > label {
+          @apply border-blue-500 bg-blue-500;
+
+          &::after {
+            content: '';
+            @apply absolute left-[4.5px] top-[1px] h-[10px] w-[5px] rotate-45 border-b-2 border-r-2 border-white;
+          }
+        }
+      }
+    }
+  }
+}
