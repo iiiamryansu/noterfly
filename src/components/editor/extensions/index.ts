@@ -1,11 +1,18 @@
+import Color from '@tiptap/extension-color'
+import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
 import SubScript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
 import TextAlign from '@tiptap/extension-text-align'
+import TextStyle from '@tiptap/extension-text-style'
 import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 
 export const extensions = [
+  Color,
+  Highlight.configure({
+    multicolor: true,
+  }),
   Placeholder.configure({
     placeholder: "Write something, or press 'space' for AI, '/' for commands…",
   }),
@@ -13,6 +20,9 @@ export const extensions = [
   Superscript,
   TextAlign.configure({
     types: ['heading', 'paragraph'],
+  }),
+  TextStyle.configure({
+    mergeNestedSpanStyles: true,
   }),
   Underline,
   StarterKit,

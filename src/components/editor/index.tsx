@@ -7,7 +7,7 @@ import { debounce } from 'lodash-es'
 
 import { updateNoteById } from '~/actions/note'
 import { extensions } from '~/components/editor/extensions'
-import { TextMenu as EditorTextMenu } from '~/components/editor/menus/TextMenu'
+import { TextMenu as EditorTextMenu } from '~/components/editor/menus'
 
 const saveContent = debounce((noteId: string, newContent: string) => {
   updateNoteById(noteId, { content: newContent })

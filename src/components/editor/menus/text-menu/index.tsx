@@ -17,6 +17,8 @@ import {
 
 import { cn } from '~/utils'
 
+import ColorSelector from './color-selector'
+
 export function TextMenu({ editor }: { editor: Editor | null }) {
   if (editor === null) return null
 
@@ -160,6 +162,10 @@ export function TextMenu({ editor }: { editor: Editor | null }) {
             strokeWidth={2}
           />
         </Button>
+
+        <Divider className="h-5 bg-divider" orientation="vertical" />
+
+        <ColorSelector editor={editor} />
       </nav>
     </BubbleMenu>
   )

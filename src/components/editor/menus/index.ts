@@ -1,1 +1,1 @@
-export { TextMenu } from '~/components/editor/menus/TextMenu'
+export { TextMenu } from '~/components/editor/menus/text-menu'

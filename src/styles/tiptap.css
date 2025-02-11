@@ -17,3 +17,57 @@
     color: hsl(var(--heroui-default-300) / var(--heroui-base-default-opacity, var(--tw-bg-opacity)));
   }
 }
+
+/* ------------------------------- Text Color ------------------------------ */
+:root {
+  --editor-text-default: inherit;
+  --editor-text-grey: rgb(120, 119, 116);
+  --editor-text-brown: rgb(159, 107, 83);
+  --editor-text-orange: rgb(217, 115, 13);
+  --editor-text-yellow: rgb(203, 145, 47);
+  --editor-text-green: rgb(68, 131, 97);
+  --editor-text-blue: rgb(51, 126, 169);
+  --editor-text-purple: rgb(144, 101, 176);
+  --editor-text-pink: rgb(193, 76, 138);
+  --editor-text-red: rgb(212, 76, 71);
+}
+
+.dark {
+  --editor-text-default: inherit;
+  --editor-text-grey: rgb(155, 155, 155);
+  --editor-text-brown: rgb(186, 133, 111);
+  --editor-text-orange: rgb(199, 125, 72);
+  --editor-text-yellow: rgb(202, 152, 77);
+  --editor-text-green: rgb(82, 158, 114);
+  --editor-text-blue: rgb(55, 154, 211);
+  --editor-text-purple: rgb(157, 104, 211);
+  --editor-text-pink: rgb(209, 87, 150);
+  --editor-text-red: rgb(223, 84, 82);
+}
+
+/* ------------------------------- Background Color ------------------------------ */
+:root {
+  --editor-background-default: inherit;
+  --editor-background-grey: rgb(248, 248, 247);
+  --editor-background-brown: rgb(244, 238, 238);
+  --editor-background-orange: rgb(251, 236, 221);
+  --editor-background-yellow: rgb(251, 243, 219);
+  --editor-background-green: rgb(237, 243, 236);
+  --editor-background-blue: rgb(231, 243, 248);
+  --editor-background-purple: rgb(248, 243, 252);
+  --editor-background-pink: rgb(252, 241, 246);
+  --editor-background-red: rgb(253, 235, 236);
+}
+
+.dark {
+  --editor-background-default: inherit;
+  --editor-background-grey: rgb(47, 47, 47);
+  --editor-background-brown: rgb(74, 50, 40);
+  --editor-background-orange: rgb(92, 59, 35);
+  --editor-background-yellow: rgb(86, 67, 40);
+  --editor-background-green: rgb(36, 61, 48);
+  --editor-background-blue: rgb(20, 58, 78);
+  --editor-background-purple: rgb(60, 45, 73);
+  --editor-background-pink: rgb(78, 44, 60);
+  --editor-background-red: rgb(82, 46, 42);
+}
