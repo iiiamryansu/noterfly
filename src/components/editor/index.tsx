@@ -4,7 +4,7 @@ import type { Note } from '@prisma/client'
 
 import { EditorContent, useEditor } from '@tiptap/react'
 import { debounce } from 'lodash-es'
-import { useRef } from 'react'
+import { type RefObject, useRef } from 'react'
 
 import { updateNoteById } from '~/actions/note'
 import { extensions } from '~/components/editor/extensions'
@@ -17,6 +17,8 @@ const saveContent = debounce((noteId: string, newContent: string) => {
 
 export function Editor({ note }: { note: Note }) {
   const editorContainerRef = useRef<HTMLDivElement>(null)
+
+  console.log(editorContainerRef.current)
 
   const editor = useEditor({
     content: generateContent(note.content),
@@ -40,7 +42,7 @@ export function Editor({ note }: { note: Note }) {
     <div ref={editorContainerRef}>
       <EditorContent editor={editor} />
       <EditorTextMenu editor={editor} />
-      <EditorColumnMenu appendTo={editorContainerRef} editor={editor} />
+      <EditorColumnMenu appendTo={editorContainerRef as RefObject<HTMLDivElement>} editor={editor} />
     </div>
   )
 }
