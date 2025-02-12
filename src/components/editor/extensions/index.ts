@@ -10,6 +10,8 @@ import TextStyle from '@tiptap/extension-text-style'
 import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 
+import SlashCommands from '~/components/editor/extensions/slash-commands'
+
 export const extensions = [
   Color,
   Highlight.configure({
@@ -32,6 +34,9 @@ export const extensions = [
   }),
   Underline,
   StarterKit,
+
+  // Custom Extensions
+  SlashCommands,
 ]
 
 /* ----------------------------- The StarterKit ----------------------------- */
