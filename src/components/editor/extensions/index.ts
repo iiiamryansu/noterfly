@@ -10,6 +10,9 @@ import TextStyle from '@tiptap/extension-text-style'
 import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 
+import Column from '~/components/editor/extensions/column/column'
+import Columns from '~/components/editor/extensions/column/columns'
+import Document from '~/components/editor/extensions/document'
 import SlashCommands from '~/components/editor/extensions/slash-commands'
 
 export const extensions = [
@@ -33,9 +36,14 @@ export const extensions = [
     mergeNestedSpanStyles: true,
   }),
   Underline,
-  StarterKit,
+  StarterKit.configure({
+    document: false,
+  }),
 
   // Custom Extensions
+  Column,
+  Columns,
+  Document,
   SlashCommands,
 ]
 

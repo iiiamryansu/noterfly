@@ -131,3 +131,33 @@
     }
   }
 }
+
+/* ---------------------------- Column & Columns ---------------------------- */
+.tiptap {
+  [data-type='columns'] {
+    &.has-focus [data-type='column'],
+    & [data-type='column'] {
+      @apply rounded-small border border-divider shadow-small;
+    }
+  }
+
+  [data-type='columns'] {
+    @apply my-2 grid gap-2;
+
+    &.layout-left {
+      grid-template-columns: 40fr 60fr;
+    }
+
+    &.layout-right {
+      grid-template-columns: 60fr 40fr;
+    }
+
+    &.layout-equal {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  [data-type='column'] {
+    @apply overflow-auto px-3;
+  }
+}

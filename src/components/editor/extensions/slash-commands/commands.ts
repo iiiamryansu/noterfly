@@ -6,6 +6,7 @@ export type Command = {
   description: string
   id: string
   image: string
+  isDisabled?: (editor: Editor) => boolean
   label: string
 }
 
@@ -91,5 +92,26 @@ export const COMMAND_GROUPS: CommandGroup[] = [
     ],
     id: 'media',
     label: 'Media',
+  },
+  {
+    commands: [
+      {
+        action: (editor) =>
+          editor
+            .chain()
+            .focus()
+            .setColumns()
+            .focus(editor.state.selection.head - 1)
+            .run(),
+        aliases: ['cols'],
+        description: 'Create 2 columns of blocks.',
+        id: '2-columns',
+        image: '/editor/types/2-columns.png',
+        isDisabled: (editor: Editor) => editor.isActive('columns'),
+        label: '2 columns',
+      },
+    ],
+    id: 'advanced-blocks',
+    label: 'Advanced blocks',
   },
 ]
