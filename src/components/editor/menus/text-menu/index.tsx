@@ -18,6 +18,7 @@ import {
 import { cn } from '~/utils'
 
 import ColorSelector from './color-selector'
+import LinkEditor from './link-editor'
 import TypeSelector from './type-selector'
 
 export function TextMenu({ editor }: { editor: Editor | null }) {
@@ -122,6 +123,8 @@ export function TextMenu({ editor }: { editor: Editor | null }) {
             strokeWidth={2}
           />
         </Button>
+
+        <LinkEditor editor={editor} />
 
         <Divider className="h-5 bg-divider" orientation="vertical" />
 

@@ -10,6 +10,7 @@ import { updateNoteById } from '~/actions/note'
 import { extensions } from '~/components/editor/extensions'
 import { TextMenu as EditorTextMenu } from '~/components/editor/menus'
 import { ColumnMenu as EditorColumnMenu } from '~/components/editor/menus/column-menu'
+import { LinkMenu as EditorLinkMenu } from '~/components/editor/menus/link-menu'
 
 const saveContent = debounce((noteId: string, newContent: string) => {
   updateNoteById(noteId, { content: newContent })
@@ -43,6 +44,7 @@ export function Editor({ note }: { note: Note }) {
       <EditorContent editor={editor} />
       <EditorTextMenu editor={editor} />
       <EditorColumnMenu appendTo={editorContainerRef as RefObject<HTMLDivElement>} editor={editor} />
+      <EditorLinkMenu appendTo={editorContainerRef as RefObject<HTMLDivElement>} editor={editor} />
     </div>
   )
 }

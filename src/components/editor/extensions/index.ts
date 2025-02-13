@@ -1,5 +1,6 @@
 import Color from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
+import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import SubScript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
@@ -19,6 +20,9 @@ export const extensions = [
   Color,
   Highlight.configure({
     multicolor: true,
+  }),
+  Link.configure({
+    openOnClick: false,
   }),
   Placeholder.configure({
     placeholder: "Write something, or press 'space' for AI, '/' for commands…",
