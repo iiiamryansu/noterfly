@@ -19,8 +19,6 @@ const saveContent = debounce((noteId: string, newContent: string) => {
 export function Editor({ note }: { note: Note }) {
   const editorContainerRef = useRef<HTMLDivElement>(null)
 
-  console.log(editorContainerRef.current)
-
   const editor = useEditor({
     content: generateContent(note.content),
     editorProps: {
