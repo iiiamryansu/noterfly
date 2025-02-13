@@ -14,7 +14,9 @@ import {
   TextSuperscriptIcon,
   TextUnderlineIcon,
 } from 'hugeicons-react'
+import { useCallback } from 'react'
 
+import { hasSelectedText } from '~/components/editor/utils'
 import { cn } from '~/utils'
 
 import ColorSelector from './color-selector'
@@ -22,10 +24,18 @@ import LinkEditor from './link-editor'
 import TypeSelector from './type-selector'
 
 export function TextMenu({ editor }: { editor: Editor | null }) {
+  const shouldShow = useCallback(() => {
+    if (editor === null) return false
+
+    if (['image'].some((type) => editor.isActive(type))) return false
+
+    return hasSelectedText({ editor })
+  }, [editor])
+
   if (editor === null) return null
 
   return (
-    <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }} updateDelay={100}>
+    <BubbleMenu editor={editor} shouldShow={shouldShow} tippyOptions={{ duration: 100 }} updateDelay={100}>
       <nav className="inline-flex items-center gap-1 rounded-lg border border-divider/30 bg-[#ffffff] p-1 shadow-sm dark:bg-[#252525]">
         <TypeSelector editor={editor} />
 

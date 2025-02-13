@@ -82,6 +82,25 @@ export const COMMAND_GROUPS: CommandGroup[] = [
   {
     commands: [
       {
+        action: (editor: Editor) => {
+          const defaultImageUrl =
+            'https://images.unsplash.com/photo-1542810104-c5f07c7357ff?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+
+          const imageUrl = window.prompt('Please enter the image URL')
+
+          editor
+            .chain()
+            .focus()
+            .setImage({ src: imageUrl || defaultImageUrl })
+            .run()
+        },
+        aliases: ['img'],
+        description: 'Upload or embed with a link.',
+        id: 'image',
+        image: '/editor/types/image.png',
+        label: 'Image',
+      },
+      {
         action: (editor: Editor) => editor.chain().focus().setCodeBlock().run(),
         aliases: [],
         description: 'Capture a code snippet.',

@@ -14,6 +14,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Column from '~/components/editor/extensions/column/column'
 import Columns from '~/components/editor/extensions/column/columns'
 import Document from '~/components/editor/extensions/document'
+import Image from '~/components/editor/extensions/image'
 import SlashCommands from '~/components/editor/extensions/slash-commands'
 
 export const extensions = [
@@ -48,6 +49,7 @@ export const extensions = [
   Column,
   Columns,
   Document,
+  Image,
   SlashCommands,
 ]
 

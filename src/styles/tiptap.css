@@ -161,3 +161,26 @@
     @apply overflow-auto px-3;
   }
 }
+
+/* ---------------------------------- Image --------------------------------- */
+.tiptap {
+  .node-image {
+    & img {
+      @apply w-full overflow-hidden rounded-small shadow-small transition-all duration-500;
+
+      filter: brightness(0.9);
+    }
+
+    &:hover img {
+      filter: brightness(1);
+    }
+  }
+
+  .ProseMirror-selectednode {
+    & img {
+      @apply border-blue-500;
+
+      filter: brightness(1);
+    }
+  }
+}
