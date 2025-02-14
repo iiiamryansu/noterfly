@@ -12,6 +12,11 @@ jobs:
       APP_NAME: ${{ secrets.APP_NAME }}
       BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
       BETTER_AUTH_URL: ${{ secrets.BETTER_AUTH_URL }}
+      CLOUDFLARE_R2_BUCKET: ${{ secrets.CLOUDFLARE_R2_BUCKET }}
+      CLOUDFLARE_R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}
+      CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+      CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+      CLOUDFLARE_R2_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_PUBLIC_URL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       IMAGE: '${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}:${{ github.sha }}'
@@ -66,6 +71,11 @@ jobs:
               -e DATABASE_URL='"'$DATABASE_URL'"' \
               -e BETTER_AUTH_SECRET='"'$BETTER_AUTH_SECRET'"' \
               -e BETTER_AUTH_URL='"'$BETTER_AUTH_URL'"' \
+              -e CLOUDFLARE_R2_BUCKET='"'$CLOUDFLARE_R2_BUCKET'"' \
+              -e CLOUDFLARE_R2_ACCOUNT_ID='"'$CLOUDFLARE_R2_ACCOUNT_ID'"' \
+              -e CLOUDFLARE_R2_ACCESS_KEY_ID='"'$CLOUDFLARE_R2_ACCESS_KEY_ID'"' \
+              -e CLOUDFLARE_R2_SECRET_ACCESS_KEY='"'$CLOUDFLARE_R2_SECRET_ACCESS_KEY'"' \
+              -e CLOUDFLARE_R2_PUBLIC_URL='"'$CLOUDFLARE_R2_PUBLIC_URL'"' \
               -p 3000:3000 \
               --name '"$APP_NAME"' \
               '"$IMAGE"';
