@@ -18,7 +18,8 @@
     "sonner",
     "tiptap",
     "turbopack",
-    "vercel"
+    "vercel",
+    "vitest"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }
