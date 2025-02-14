@@ -15,6 +15,7 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       IMAGE: '${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}:${{ github.sha }}'
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       SERVER_DOMAIN: ${{ secrets.SERVER_DOMAIN }}
       SERVER_KEY: ${{ secrets.SERVER_KEY }}
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
