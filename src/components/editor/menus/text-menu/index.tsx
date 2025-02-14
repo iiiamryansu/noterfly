@@ -27,7 +27,7 @@ export function TextMenu({ editor }: { editor: Editor | null }) {
   const shouldShow = useCallback(() => {
     if (editor === null) return false
 
-    if (['image'].some((type) => editor.isActive(type))) return false
+    if (['image', 'imageUploader'].some((type) => editor.isActive(type))) return false
 
     return hasSelectedText({ editor })
   }, [editor])
