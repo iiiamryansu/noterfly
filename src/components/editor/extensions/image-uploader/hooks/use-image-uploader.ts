@@ -1,11 +1,24 @@
+import imageCompression from 'browser-image-compression'
 import { useState } from 'react'
 import { toast } from 'sonner'
+
+/**
+ * 参考文档
+ * https://github.com/Donaldcwl/browser-image-compression
+ */
+const imageCompressionOptions = {
+  maxSizeMB: 1,
+  maxWidthOrHeight: 1200,
+  useWebWorker: true,
+}
 
 export function useUploader({ setImage }: { setImage: (imageUrl: string) => void }) {
   const [isUploading, setIsUploading] = useState<boolean>(false)
 
   async function uploadImage(image: File) {
     setIsUploading(true)
+
+    const compressedImage = new File([await imageCompression(image, imageCompressionOptions)], image.name) // 上传前压缩
 
     try {
       const preSignedRes = await fetch('/api/image/pre-signed', {
@@ -18,7 +31,7 @@ export function useUploader({ setImage }: { setImage: (imageUrl: string) => void
         const { imagePreSignedUrl, imageUrl } = await preSignedRes.json()
 
         const uploadImageRes = await fetch(imagePreSignedUrl, {
-          body: image,
+          body: compressedImage,
           method: 'PUT',
         })
 
