@@ -9,6 +9,7 @@ import { type RefObject, useRef } from 'react'
 import { updateNoteById } from '~/actions/note'
 import { extensions } from '~/components/editor/extensions'
 import { TextMenu as EditorTextMenu } from '~/components/editor/menus'
+import { BlockMenu as EditorBlockMenu } from '~/components/editor/menus/block-menu'
 import { ColumnMenu as EditorColumnMenu } from '~/components/editor/menus/column-menu'
 import { ImageMenu as EditorImageMenu } from '~/components/editor/menus/image-menu'
 import { LinkMenu as EditorLinkMenu } from '~/components/editor/menus/link-menu'
@@ -45,6 +46,7 @@ export function Editor({ note }: { note: Note }) {
       <EditorColumnMenu appendTo={editorContainerRef as RefObject<HTMLDivElement>} editor={editor} />
       <EditorLinkMenu appendTo={editorContainerRef as RefObject<HTMLDivElement>} editor={editor} />
       <EditorImageMenu appendTo={editorContainerRef as RefObject<HTMLDivElement>} editor={editor} />
+      <EditorBlockMenu editor={editor} />
     </div>
   )
 }

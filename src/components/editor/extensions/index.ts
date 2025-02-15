@@ -1,4 +1,5 @@
 import Color from '@tiptap/extension-color'
+import Dropcursor from '@tiptap/extension-dropcursor'
 import Highlight from '@tiptap/extension-highlight'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -44,12 +45,14 @@ export const extensions = [
   Underline,
   StarterKit.configure({
     document: false,
+    dropcursor: false,
   }),
 
   // Custom Extensions
   Column,
   Columns,
   Document,
+  Dropcursor,
   Image,
   ImageUploader,
   SlashCommands,

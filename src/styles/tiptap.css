@@ -3,8 +3,12 @@
   outline: none;
   padding-bottom: 128px;
   width: 100%;
-  max-width: 800px;
+  max-width: 880px;
   height: 100%;
+
+  > * {
+    @apply mx-10;
+  }
 }
 
 /* ------------------------------- Placeholder ------------------------------ */
