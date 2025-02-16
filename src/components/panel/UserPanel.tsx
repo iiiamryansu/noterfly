@@ -5,10 +5,11 @@ import { ArrowDown01Icon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } fr
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
-import { signOut, useSession } from '~/lib/auth/client'
+import { signOut } from '~/lib/auth/client'
+import { useUserStore } from '~/stores/user-store'
 
 export function UserPanel() {
-  const { data: session } = useSession()
+  const currentUser = useUserStore((state) => state.currentUser)
 
   const router = useRouter()
 
@@ -29,7 +30,7 @@ export function UserPanel() {
             endContent={<ArrowDown01Icon className="size-4" />}
             size="sm"
             startContent={
-              <Avatar className="max-h-6 max-w-6" radius="sm" size="sm" src={session?.user?.image ?? 'default/avatar.svg'} />
+              <Avatar className="max-h-6 max-w-6" radius="sm" size="sm" src={currentUser?.image ?? 'default/avatar.svg'} />
             }
             variant="light"
           >
@@ -53,14 +54,14 @@ export function UserPanel() {
                 avatarProps={{
                   radius: 'sm',
                   size: 'sm',
-                  src: session?.user?.image ?? 'default/avatar.svg',
+                  src: currentUser?.image ?? 'default/avatar.svg',
                 }}
                 classNames={{
                   description: 'text-default-500',
                   name: 'text-default-700',
                 }}
-                description={`@${session?.user?.username ?? 'default'}`}
-                name={session?.user?.name ?? 'Default'}
+                description={`@${currentUser?.username ?? 'default'}`}
+                name={currentUser?.name ?? 'Default'}
               />
             </DropdownItem>
             <DropdownItem

@@ -15,3 +15,5 @@ export const auth = betterAuth({
   plugins: [username(), nextCookies()], // make sure the nextCookies() is the last plugin in the array
   trustedOrigins: ['https://noterfly.iamryansu.com'],
 })
+
+export type User = typeof auth.$Infer.Session.user
