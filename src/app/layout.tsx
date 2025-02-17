@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { getLocale } from 'next-intl/server'
 import { Poppins } from 'next/font/google'
+import { cookies } from 'next/headers'
 
 import { getAllNotes } from '~/actions/note'
 import { AppLayout, AppProvider, NextIntlProvider } from '~/components/global'
@@ -27,12 +28,18 @@ export default async function RootLayout({
   const locale = await getLocale()
   const notes = await getAllNotes()
 
+  async function getDefaultLayout() {
+    const defaultLayout = (await cookies()).get('react-resizable-panels:layout')?.value
+
+    return JSON.parse(defaultLayout ?? '[25, 75]')
+  }
+
   return (
     <html lang={locale}>
       <body className={poppins.className}>
         <NextIntlProvider>
           <AppProvider notes={notes}>
-            <AppLayout>{children}</AppLayout>
+            <AppLayout defaultLayout={await getDefaultLayout()}>{children}</AppLayout>
           </AppProvider>
         </NextIntlProvider>
       </body>

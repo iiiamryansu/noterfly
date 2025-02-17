@@ -6,7 +6,7 @@ import { ControlPanel, LogoPanel, MenuPanel, NavigationPanel, NotebookPanel, Use
 
 export function Sidebar() {
   return (
-    <aside className="row-span-2 grid h-full w-64 flex-none grid-cols-1 grid-rows-[48px_68px_17px_40px_212px_1fr_1px_48px] px-2">
+    <aside className="grid h-full w-full flex-none grid-cols-1 grid-rows-[48px_68px_17px_40px_212px_1fr_1px_48px] pl-2">
       <LogoPanel />
       <MenuPanel />
       <Divider className="my-2" />

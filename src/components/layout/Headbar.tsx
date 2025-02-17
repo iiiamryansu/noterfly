@@ -8,6 +8,7 @@ import {
   Comment01Icon,
   Note01Icon,
   SidebarLeft01Icon,
+  SidebarRight01Icon,
   SquareLock02Icon,
   StarIcon,
 } from 'hugeicons-react'
@@ -42,7 +43,12 @@ let notes = [
   },
 ]
 
-export function Headbar() {
+interface HeadbarProps {
+  isSidebarExpanded: boolean
+  toggleSidebarAction: () => void
+}
+
+export function Headbar({ isSidebarExpanded, toggleSidebarAction }: HeadbarProps) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -59,10 +65,17 @@ export function Headbar() {
   }
 
   return (
-    <header className="mr-2 grid grid-cols-[32px_1fr_188px] grid-rows-1 items-center gap-2">
+    <header className="mx-2 grid grid-cols-[32px_1fr_188px] grid-rows-1 items-center gap-2">
       {/* Toggle sidebar */}
-      <Button className="text-default-500 hover:text-default-700" isIconOnly size="sm" variant="light">
-        <SidebarLeft01Icon className="size-4" />
+      <Button
+        className="text-default-500 hover:text-default-700"
+        disableAnimation
+        isIconOnly
+        onPress={toggleSidebarAction}
+        size="sm"
+        variant="light"
+      >
+        {isSidebarExpanded ? <SidebarLeft01Icon className="size-4" /> : <SidebarRight01Icon className="size-4" />}
       </Button>
 
       {/* Note tabs */}

@@ -7,7 +7,7 @@ export function Main({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme()
 
   return (
-    <main className="relative mb-2 mr-2 h-[calc(100vh-56px)] flex-1 overflow-hidden rounded-md border border-divider bg-background">
+    <main className="relative mx-2 mb-2 h-[calc(100vh-56px)] flex-1 overflow-hidden rounded-md border border-divider bg-background">
       <Toaster
         className="absolute"
         offset={16}
