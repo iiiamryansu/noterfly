@@ -19,6 +19,6 @@ export async function createNewNote(): Promise<void> {
     })
 
     revalidatePath('/notes')
-    redirect(`/notes/note/${newNote.id}`)
+    redirect(`/note/${newNote.id}`)
   }
 }

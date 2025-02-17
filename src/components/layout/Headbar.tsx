@@ -52,9 +52,9 @@ export function Headbar() {
     if (notes.length === 0) {
       router.push('/notes')
     } else if (pathname.includes(noteId)) {
-      router.push(`/notes/note/${notes[0].id}`)
+      router.push(`/note/${notes[0].id}`)
     } else {
-      router.push(`/notes/note/${noteId}`)
+      router.push(`/note/${noteId}`)
     }
   }
 
@@ -81,7 +81,7 @@ export function Headbar() {
                   />
                 }
                 key={note.id}
-                onPress={() => router.push(`/notes/note/${note.id}`)}
+                onPress={() => router.push(`/note/${note.id}`)}
                 size="sm"
                 startContent={<Note01Icon className="size-4 flex-shrink-0" />}
                 variant={isActive ? 'solid' : 'ghost'}

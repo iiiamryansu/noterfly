@@ -184,7 +184,7 @@ export default function NotesPage() {
         <TableBody items={notes}>
           {(note) => {
             return (
-              <TableRow className="cursor-pointer" key={note.id} onClick={() => router.push(`/notes/note/${note.id}`)}>
+              <TableRow className="cursor-pointer" key={note.id} onClick={() => router.push(`/note/${note.id}`)}>
                 {(columnKey) => {
                   return <TableCell>{renderCell(note, columnKey)}</TableCell>
                 }}

@@ -17,6 +17,6 @@ export async function updateNoteById(id: string, data: { content?: string; title
       },
     })
 
-    revalidatePath(`/notes/note/${id}`)
+    revalidatePath(`/note/${id}`)
   }
 }
