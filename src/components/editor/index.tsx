@@ -1,12 +1,8 @@
 'use client'
 
-import type { Note } from '@prisma/client'
-
 import { EditorContent, useEditor } from '@tiptap/react'
-import { debounce } from 'lodash-es'
 import { type RefObject, useRef } from 'react'
 
-import { updateNoteById } from '~/actions/note'
 import { extensions } from '~/components/editor/extensions'
 import { TextMenu as EditorTextMenu } from '~/components/editor/menus'
 import { BlockMenu as EditorBlockMenu } from '~/components/editor/menus/block-menu'
@@ -15,15 +11,16 @@ import { ImageMenu as EditorImageMenu } from '~/components/editor/menus/image-me
 import { LinkMenu as EditorLinkMenu } from '~/components/editor/menus/link-menu'
 import '~/styles/tiptap.css'
 
-const saveContent = debounce((noteId: string, newContent: string) => {
-  updateNoteById(noteId, { content: newContent })
-}, 1000)
+interface EditorProps {
+  handleUpdateAction: (newContent: string) => void
+  rawContent: string
+}
 
-export function Editor({ note }: { note: Note }) {
+export function Editor({ handleUpdateAction, rawContent }: EditorProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null)
 
   const editor = useEditor({
-    content: generateContent(note.content),
+    content: generateContent(rawContent),
     editorProps: {
       attributes: {
         class: 'prose prose-stone dark:prose-invert',
@@ -32,13 +29,9 @@ export function Editor({ note }: { note: Note }) {
     extensions,
     immediatelyRender: true,
     onUpdate: ({ editor }) => {
-      handleChange(JSON.stringify(editor.getJSON()))
+      handleUpdateAction(JSON.stringify(editor.getJSON()))
     },
   })
-
-  function handleChange(newContent: string) {
-    saveContent(note.id, newContent)
-  }
 
   return (
     <div ref={editorContainerRef}>
@@ -53,44 +46,9 @@ export function Editor({ note }: { note: Note }) {
 }
 
 function generateContent(rawContent: string) {
-  if (!rawContent) {
-    return {
-      content: [
-        {
-          content: [],
-          type: 'paragraph',
-        },
-      ],
-      type: 'doc',
-    }
-  }
-
   try {
-    const parsed = JSON.parse(rawContent)
-    // 验证基本结构
-    if (typeof parsed === 'object' && parsed.type === 'doc' && Array.isArray(parsed.content)) {
-      return parsed
-    }
-    // 如果结构不正确，返回默认文档
-    return {
-      content: [
-        {
-          content: [],
-          type: 'paragraph',
-        },
-      ],
-      type: 'doc',
-    }
+    return JSON.parse(rawContent)
   } catch {
-    // JSON 解析失败时返回默认文档
-    return {
-      content: [
-        {
-          content: [],
-          type: 'paragraph',
-        },
-      ],
-      type: 'doc',
-    }
+    return undefined
   }
 }

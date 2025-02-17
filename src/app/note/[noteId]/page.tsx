@@ -1,16 +1,17 @@
 import { notFound } from 'next/navigation'
 
-import { getNoteById } from '~/actions/note'
 import { Note } from '~/components/note'
+import { prisma } from '~/lib/prisma'
 
 export default async function NotePage({ params }: { params: Promise<{ noteId: string }> }) {
   const { noteId } = await params
 
-  const note = await getNoteById(noteId)
+  const note = await prisma.note.findUnique({
+    select: { id: true },
+    where: { id: noteId },
+  })
 
-  if (!note) {
-    notFound()
-  }
+  if (!note) notFound()
 
-  return <Note note={note} />
+  return <Note noteId={noteId} />
 }
