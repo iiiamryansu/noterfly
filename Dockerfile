@@ -7,9 +7,10 @@ FROM base AS deps
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json bun.lock ./
+COPY package.json bun.lock .npmrc ./
+ARG TIPTAP_PRO_TOKEN
 RUN \
-  if [ -f bun.lock ]; then bun install --frozen-lockfile; \
+  if [ -f bun.lock ]; then TIPTAP_PRO_TOKEN=${TIPTAP_PRO_TOKEN} bun install --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
 

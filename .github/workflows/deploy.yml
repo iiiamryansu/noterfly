@@ -26,6 +26,7 @@ jobs:
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
       SERVER_USER: ${{ secrets.SERVER_USER }}
       TAG: ${{ github.sha }}
+      TIPTAP_PRO_TOKEN: ${{ secrets.TIPTAP_PRO_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -50,6 +51,7 @@ jobs:
             --build-arg DATABASE_URL="$DATABASE_URL" \
             --build-arg BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET" \
             --build-arg BETTER_AUTH_URL="$BETTER_AUTH_URL" \
+            --build-arg TIPTAP_PRO_TOKEN="$TIPTAP_PRO_TOKEN" \
             -t $IMAGE \
             .
 
