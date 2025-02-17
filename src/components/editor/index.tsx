@@ -13,6 +13,7 @@ import { BlockMenu as EditorBlockMenu } from '~/components/editor/menus/block-me
 import { ColumnMenu as EditorColumnMenu } from '~/components/editor/menus/column-menu'
 import { ImageMenu as EditorImageMenu } from '~/components/editor/menus/image-menu'
 import { LinkMenu as EditorLinkMenu } from '~/components/editor/menus/link-menu'
+import '~/styles/tiptap.css'
 
 const saveContent = debounce((noteId: string, newContent: string) => {
   updateNoteById(noteId, { content: newContent })
