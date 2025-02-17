@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { getLocale } from 'next-intl/server'
 import { Poppins } from 'next/font/google'
 
+import { getAllNotes } from '~/actions/note'
 import { AppLayout, AppProvider, NextIntlProvider } from '~/components/global'
 import '~/styles/global.css'
 
@@ -24,12 +25,13 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const locale = await getLocale()
+  const notes = await getAllNotes()
 
   return (
     <html lang={locale}>
       <body className={poppins.className}>
         <NextIntlProvider>
-          <AppProvider>
+          <AppProvider notes={notes}>
             <AppLayout>{children}</AppLayout>
           </AppProvider>
         </NextIntlProvider>

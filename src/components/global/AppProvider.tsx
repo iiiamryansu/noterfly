@@ -1,11 +1,14 @@
 'use client'
 
+import type { Note } from '@prisma/client'
+
 import { HeroUIProvider } from '@heroui/system'
 import { ThemeProvider } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { useUser } from '~/hooks/auth'
+import { NoteStoreProvider } from '~/stores/note-store'
 import { useUserStore } from '~/stores/user-store'
 
 declare module '@react-types/shared' {
@@ -14,7 +17,7 @@ declare module '@react-types/shared' {
   }
 }
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
+export function AppProvider({ children, notes }: { children: React.ReactNode; notes: Note[] }) {
   const router = useRouter()
   const user = useUser()
   const setCurrentUser = useUserStore((state) => state.setCurrentUser)
@@ -37,7 +40,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <HeroUIProvider className="h-full" navigate={router.push}>
-      <ThemeProvider attribute="class">{children}</ThemeProvider>
+      <ThemeProvider attribute="class">
+        <NoteStoreProvider notes={notes}>{children}</NoteStoreProvider>
+      </ThemeProvider>
     </HeroUIProvider>
   )
 }

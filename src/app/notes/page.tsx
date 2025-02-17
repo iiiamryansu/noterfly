@@ -34,7 +34,7 @@ import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 
 import { deleteNoteById } from '~/actions/note'
-import { useNotes } from '~/contexts'
+import { useNoteStore } from '~/stores/note-store'
 
 const columns = [
   { name: 'Title', uid: 'title' },
@@ -44,7 +44,7 @@ const columns = [
 ]
 
 export default function NotesPage() {
-  const { notes } = useNotes()
+  const notes = useNoteStore((state) => state.notes)
 
   const router = useRouter()
 
