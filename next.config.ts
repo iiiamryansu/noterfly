@@ -10,15 +10,6 @@ const config: Config = {
     ignoreDuringBuilds: true,
   },
   output: 'standalone',
-  async redirects() {
-    return [
-      {
-        destination: '/welcome',
-        permanent: true,
-        source: '/',
-      },
-    ]
-  },
 }
 
 export default withSentryConfig(withNextIntl(config), {

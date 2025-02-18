@@ -41,7 +41,7 @@
     "@tiptap/starter-kit": "^2.11.5",
     "@tiptap/suggestion": "^2.11.5",
     "axios": "^1.7.9",
-    "better-auth": "^1.1.15",
+    "better-auth": "^1.1.18",
     "browser-image-compression": "^2.0.2",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

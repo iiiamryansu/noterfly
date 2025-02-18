@@ -1,36 +1,45 @@
-import type { NextRequest } from 'next/server'
+import { getSessionCookie } from 'better-auth'
+import { type NextRequest, NextResponse } from 'next/server'
 
-import { betterFetch } from '@better-fetch/fetch'
-import { NextResponse } from 'next/server'
+/**
+ * In Next.js middleware, it's recommended to only check for the existence of a session cookie to handle redirection.
+ * To avoid blocking requests by making API or database calls.
+ */
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
 
-import type { auth } from '~/lib/auth'
+  const cookies = getSessionCookie(request)
 
-type Session = typeof auth.$Infer.Session
-
-export default async function authMiddleware(request: NextRequest) {
-  const { data: session } = await betterFetch<Session>('/api/auth/get-session', {
-    baseURL: process.env.NODE_ENV === 'production' ? `http://localhost:${process.env.PORT || 3000}` : request.nextUrl.origin,
-    headers: {
-      //get the cookie from the request
-      cookie: request.headers.get('cookie') || '',
-    },
-  })
-
-  if (request.nextUrl.pathname.startsWith('/auth')) {
-    if (session) {
-      return NextResponse.redirect(new URL('/home', request.url))
-    } else {
-      return NextResponse.next()
-    }
-  } else {
-    if (session) {
-      return NextResponse.next()
-    } else {
-      return NextResponse.redirect(new URL('/auth/sign-in', request.url))
-    }
+  if (pathname === '/') {
+    if (cookies) return NextResponse.redirect(new URL('/home', request.url))
+    else return NextResponse.next()
   }
+
+  if (pathname === '/home') {
+    if (cookies) return NextResponse.next()
+    else return NextResponse.redirect(new URL('/', request.url))
+  }
+
+  if (pathname.startsWith('/auth')) {
+    if (cookies) return NextResponse.redirect(new URL('/home', request.url))
+    else return NextResponse.next()
+  }
+
+  if (cookies) return NextResponse.next()
+  else return NextResponse.redirect(new URL('/auth/sign-in', request.url))
 }
 
 export const config = {
-  matcher: ['/auth/:path*', '/calendar', '/home', '/notes', '/notes/:path*', '/profile', '/settings', '/tasks'],
+  matcher: [
+    '/',
+    '/auth/:path*',
+    '/calendar',
+    '/home',
+    '/note/:path*',
+    '/notes',
+    '/notes/:path*',
+    '/profile',
+    '/settings',
+    '/tasks',
+  ],
 }
