@@ -1,7 +1,7 @@
 'use client'
 
 import { EditorContent, useEditor } from '@tiptap/react'
-import { type RefObject, useRef } from 'react'
+import { type RefObject, useEffect, useRef } from 'react'
 
 import { extensions } from '~/components/editor/extensions'
 import { TextMenu as EditorTextMenu } from '~/components/editor/menus'
@@ -32,6 +32,21 @@ export function Editor({ handleUpdateAction, rawContent }: EditorProps) {
       handleUpdateAction(JSON.stringify(editor.getJSON()))
     },
   })
+
+  /* ---------------------- 在销毁 Editor 之前统一移除所有 Tippy 实例 ---------------------- */
+  useEffect(() => {
+    return () => {
+      if (editor) {
+        const tippyInstances = document.querySelectorAll('[data-tippy-root]')
+
+        tippyInstances.forEach((tippyInstance) => tippyInstance.remove())
+
+        editor.destroy()
+      }
+    }
+  }, [editor])
+
+  /* -------------------------------------------------------------------------- */
 
   return (
     <div ref={editorContainerRef}>
