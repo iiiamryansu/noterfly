@@ -1,3 +1,3 @@
-export { Particles } from '~/components/ui/Particles'
-export { ParticlesWrapper } from '~/components/ui/ParticlesWrapper'
-export { Typewriter } from '~/components/ui/Typewriter'
+export { Particles } from '~/components/ui/particles'
+export { ParticlesWrapper } from '~/components/ui/particles-wrapper'
+export { Typewriter } from '~/components/ui/typewriter'

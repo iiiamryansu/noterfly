@@ -1,0 +1,37 @@
+'use client'
+
+import { Button } from '@heroui/react'
+import { Home01Icon, Note01Icon } from 'hugeicons-react'
+import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
+
+import { createNewNote } from '~/actions/note'
+
+export default function MenuPanel() {
+  const router = useRouter()
+
+  const t = useTranslations('Layout.Sidebar.MenuPanel')
+
+  return (
+    <section className="flex flex-col gap-1">
+      <Button
+        className="justify-start"
+        onPress={() => router.push('/home')}
+        size="sm"
+        startContent={<Home01Icon className="size-4" />}
+        variant="light"
+      >
+        {t('home')}
+      </Button>
+      <Button
+        className="justify-start"
+        onPress={createNewNote}
+        size="sm"
+        startContent={<Note01Icon className="size-4" />}
+        variant="light"
+      >
+        {t('new-note')}
+      </Button>
+    </section>
+  )
+}
