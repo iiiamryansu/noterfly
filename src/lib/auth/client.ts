@@ -7,6 +7,7 @@ const auth = createAuthClient({
 })
 
 export const {
+  deleteUser,
   emailOtp: { sendVerificationOtp, verifyEmail },
   signIn,
   signOut,

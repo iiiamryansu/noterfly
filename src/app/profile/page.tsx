@@ -15,16 +15,36 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@heroui/react'
-import { type FormEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { delay } from 'es-toolkit'
+import { useRouter } from 'next/navigation'
+import { type FormEvent, useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { updatePassword } from '~/actions/auth'
-import { sendVerificationOtp, verifyEmail } from '~/lib/auth/client'
+import { deleteUser, sendVerificationOtp, verifyEmail } from '~/lib/auth/client'
 import { useUserStore } from '~/stores/user-store'
 
 export default function ProfilePage() {
   const currentUser = useUserStore((state) => state.currentUser)
+
+  const [isDeleting, startTransition] = useTransition()
+
+  const router = useRouter()
+
+  const handleDeleteUser = useCallback(() => {
+    startTransition(async () => {
+      const { data } = await deleteUser()
+
+      if (data?.success) {
+        toast.success('Your account has been deleted successfully!')
+
+        await delay(1000).then(() => router.push('/auth/sign-in')) // 延迟 1 秒后跳转至登录页面
+      } else {
+        toast.error('Unable to delete your account!')
+      }
+    })
+  }, [router])
 
   return (
     <>
@@ -96,8 +116,8 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            <Button color="danger" radius="sm" size="sm" variant="bordered">
-              Delete
+            <Button color="danger" isLoading={isDeleting} onPress={handleDeleteUser} radius="sm" size="sm" variant="bordered">
+              {isDeleting ? 'Deleting...' : 'Delete'}
             </Button>
           </div>
         </div>
