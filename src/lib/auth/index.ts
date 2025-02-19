@@ -34,6 +34,15 @@ export const auth = betterAuth({
     }),
     nextCookies(),
   ], // make sure the nextCookies() is the last plugin in the array
+
+  // https://www.better-auth.com/docs/guides/optimizing-for-performance#cookie-cache
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // Cache duration in seconds
+    },
+  },
+
   trustedOrigins: ['https://noterfly.iamryansu.com'],
   user: {
     deleteUser: {
