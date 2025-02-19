@@ -3,9 +3,9 @@
 import { useRef, useState } from 'react'
 import { type ImperativePanelHandle, Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
-import Headbar from './headbar'
-import Main from './main'
-import Sidebar from './sidebar'
+import Headbar from '~/components/layouts/headbar'
+import Main from '~/components/layouts/main'
+import Sidebar from '~/components/layouts/sidebar'
 
 interface AppLayoutProps {
   children: React.ReactNode
