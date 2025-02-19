@@ -4,7 +4,9 @@ import {
   Button,
   Chip,
   Divider,
+  Form,
   Image,
+  Input,
   InputOtp,
   Modal,
   ModalBody,
@@ -13,9 +15,11 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@heroui/react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { type FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
+import { z } from 'zod'
 
+import { updatePassword } from '~/actions/auth'
 import { sendVerificationOtp, verifyEmail } from '~/lib/auth/client'
 import { useUserStore } from '~/stores/user-store'
 
@@ -61,18 +65,7 @@ export default function ProfilePage() {
         <div className="flex flex-col gap-4 py-4">
           <Email />
 
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-1">
-              <span className="select-none text-sm font-medium text-default-900">Password</span>
-              <p className="select-none font-mono text-xs text-default-500">
-                If you lose access to your email address, you&apos;ll be able to log in using your password.
-              </p>
-            </div>
-
-            <Button radius="sm" size="sm" variant="bordered">
-              Change password
-            </Button>
-          </div>
+          <Password />
 
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-1">
@@ -299,6 +292,132 @@ function Email() {
             </Button>
           </ModalFooter>
         </ModalContent>
+      </Modal>
+    </div>
+  )
+}
+
+const formSchema = z.object({
+  currentPassword: z.string().min(1, 'Current password is required'),
+  newPassword: z
+    .string()
+    .min(1, 'New password is required')
+    .min(8, 'Password must be at least 8 characters')
+    .max(32, 'Password must be at most 32 characters')
+    .regex(/^\S*$/, 'Password cannot contain spaces'),
+})
+
+function Password() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
+  const [isUpdating, setIsUpdating] = useState<boolean>(false)
+  const [formErrors, setFormErrors] = useState<Record<string, string[]>>({})
+
+  const handleUpdatePassword = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+      const { data, error, success } = formSchema.safeParse(Object.fromEntries(new FormData(e.currentTarget)))
+
+      if (success) {
+        const { currentPassword, newPassword } = data
+
+        try {
+          setIsUpdating(true) // 开始提交
+
+          const isUpdated = await updatePassword(currentPassword, newPassword) // 更新密码
+
+          if (isUpdated) {
+            setIsUpdating(false) // 结束提交
+
+            toast.success('Password successfully updated!')
+
+            onOpenChange() // 关闭模态框
+          } else {
+            setIsUpdating(false) // 结束提交
+
+            toast.error('Current password is incorrect!')
+          }
+        } catch {
+          toast.error('Unable to update password!')
+        } finally {
+          setIsUpdating(false) // 结束提交
+        }
+      } else {
+        return setFormErrors(error.flatten().fieldErrors)
+      }
+    },
+    [onOpenChange],
+  )
+
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1">
+          <span className="select-none text-sm font-medium text-default-900">Password</span>
+          <p className="select-none font-mono text-xs text-default-500">
+            If you lose access to your email address, you&apos;ll be able to log in using your password.
+          </p>
+        </div>
+      </div>
+
+      <Button color="default" onPress={onOpen} radius="sm" size="sm" variant="bordered">
+        Change password
+      </Button>
+      <Modal
+        classNames={{
+          backdrop: [
+            'absolute inset-0', // 相对于 wrapper 定位
+          ],
+          base: [
+            'relative', // 使用相对定位
+            'z-50', // 确保在最上层
+          ],
+          wrapper: [
+            'absolute inset-0', // 相对于 main-container 定位
+            'flex items-center justify-center',
+            'h-full w-full', // 确保大小与 main-container 一致
+          ],
+        }}
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        portalContainer={document.getElementById('main-container')!}
+        size="xs"
+      >
+        <Form className="w-full" onSubmit={handleUpdatePassword} validationErrors={formErrors}>
+          <ModalContent className="bg-base-default">
+            <ModalHeader>Change password</ModalHeader>
+            <ModalBody>
+              <Input
+                errorMessage={({ validationErrors }) => validationErrors[0]}
+                isClearable
+                isDisabled={isUpdating}
+                label="Enter your current password"
+                name="currentPassword"
+                placeholder="Current password"
+                type="password"
+                variant="bordered"
+              />
+              <Input
+                errorMessage={({ validationErrors }) => validationErrors[0]}
+                isClearable
+                isDisabled={isUpdating}
+                label="Enter a new password"
+                name="newPassword"
+                placeholder="New password"
+                type="password"
+                variant="bordered"
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" fullWidth isLoading={isUpdating} type="submit">
+                Change password
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Form>
       </Modal>
     </div>
   )
