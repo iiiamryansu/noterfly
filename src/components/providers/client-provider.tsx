@@ -7,8 +7,7 @@ import { ThemeProvider } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { useUser } from '~/hooks/auth'
-import { TRPCProvider } from '~/lib/trpc/client'
+import { trpc } from '~/lib/trpc/client'
 import { NoteStoreProvider } from '~/stores/note-store'
 import { useUserStore } from '~/stores/user-store'
 
@@ -25,12 +24,14 @@ interface ClientProviderProps {
 
 export default function ClientProvider({ children, notes }: ClientProviderProps) {
   const router = useRouter()
-  const user = useUser()
+
   const setCurrentUser = useUserStore((state) => state.setCurrentUser)
 
+  const { data: currentUser } = trpc.user.getCurrentUser.useQuery()
+
   useEffect(() => {
-    if (user) setCurrentUser(user)
-  }, [user, setCurrentUser])
+    if (currentUser) setCurrentUser(currentUser)
+  }, [currentUser, setCurrentUser])
 
   /* ------------------------------ 避免水合阶段的不匹配问题 ------------------------------ */
 
@@ -45,12 +46,10 @@ export default function ClientProvider({ children, notes }: ClientProviderProps)
   /* -------------------------------------------------------------------------- */
 
   return (
-    <TRPCProvider>
-      <HeroUIProvider className="h-full" navigate={router.push}>
-        <ThemeProvider attribute="class">
-          <NoteStoreProvider notes={notes}>{children}</NoteStoreProvider>
-        </ThemeProvider>
-      </HeroUIProvider>
-    </TRPCProvider>
+    <HeroUIProvider className="h-full" navigate={router.push}>
+      <ThemeProvider attribute="class">
+        <NoteStoreProvider notes={notes}>{children}</NoteStoreProvider>
+      </ThemeProvider>
+    </HeroUIProvider>
   )
 }

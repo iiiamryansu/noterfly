@@ -5,6 +5,7 @@ import { cache } from 'react'
 
 import type { AppRouter } from '~/services/trpc/routers'
 
+import { auth } from '~/lib/auth'
 import { createQueryClient } from '~/lib/trpc/query-client'
 import { createTRPCContext } from '~/services/trpc'
 import { createCaller } from '~/services/trpc/routers'
@@ -18,8 +19,15 @@ const createContext = cache(async () => {
 
   newHeaders.set('x-trpc-source', 'rsc')
 
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  })
+
+  const userId = session?.user?.id || null
+
   return createTRPCContext({
     headers: newHeaders,
+    userId,
   })
 })
 

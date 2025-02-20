@@ -5,7 +5,6 @@ import {
   Chip,
   Divider,
   Form,
-  Image,
   Input,
   InputOtp,
   Modal,
@@ -22,12 +21,11 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { updatePassword } from '~/actions/auth'
+import { Profile } from '~/app/profile/_components/profile'
 import { deleteUser, sendVerificationOtp, verifyEmail } from '~/lib/auth/client'
 import { useUserStore } from '~/stores/user-store'
 
 export default function ProfilePage() {
-  const currentUser = useUserStore((state) => state.currentUser)
-
   const [isDeleting, startTransition] = useTransition()
 
   const router = useRouter()
@@ -50,28 +48,7 @@ export default function ProfilePage() {
     <>
       <span className="col-span-2 block shrink-0 select-none py-6 text-3xl font-bold">Profile</span>
 
-      <section className="flex w-64 flex-col gap-4 py-6">
-        <Image
-          alt="Avatar"
-          className="size-64 border border-divider"
-          draggable={false}
-          height={256}
-          isZoomed={true}
-          loading="eager"
-          radius="full"
-          src={currentUser?.image ?? 'default/avatar.svg'}
-          width={256}
-        />
-
-        <div className="flex flex-col gap-1">
-          <h1 className="select-none text-xl font-bold text-default-900">{currentUser?.name}</h1>
-          <span className="select-none font-mono text-sm text-default-500">@{currentUser?.username}</span>
-        </div>
-
-        <Button radius="sm" size="sm" variant="bordered">
-          Edit profile
-        </Button>
-      </section>
+      <Profile />
 
       <section className="flex select-none items-center justify-center rounded-small border border-divider font-mono text-default-500">
         Placeholder

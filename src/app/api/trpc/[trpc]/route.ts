@@ -1,8 +1,10 @@
 import type { NextRequest } from 'next/server'
 
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
+import { headers } from 'next/headers'
 
 import { env } from '~/env'
+import { auth } from '~/lib/auth'
 import { createTRPCContext } from '~/services/trpc'
 import { appRouter } from '~/services/trpc/routers'
 
@@ -11,8 +13,15 @@ import { appRouter } from '~/services/trpc/routers'
  * handling a HTTP request (e.g. when you make requests from Client Components).
  */
 async function createContext(req: NextRequest) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  })
+
+  const userId = session?.user.id || null
+
   return createTRPCContext({
     headers: req.headers,
+    userId,
   })
 }
 
