@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { useUser } from '~/hooks/auth'
+import { TRPCProvider } from '~/lib/trpc/client'
 import { NoteStoreProvider } from '~/stores/note-store'
 import { useUserStore } from '~/stores/user-store'
 
@@ -44,10 +45,12 @@ export default function ClientProvider({ children, notes }: ClientProviderProps)
   /* -------------------------------------------------------------------------- */
 
   return (
-    <HeroUIProvider className="h-full" navigate={router.push}>
-      <ThemeProvider attribute="class">
-        <NoteStoreProvider notes={notes}>{children}</NoteStoreProvider>
-      </ThemeProvider>
-    </HeroUIProvider>
+    <TRPCProvider>
+      <HeroUIProvider className="h-full" navigate={router.push}>
+        <ThemeProvider attribute="class">
+          <NoteStoreProvider notes={notes}>{children}</NoteStoreProvider>
+        </ThemeProvider>
+      </HeroUIProvider>
+    </TRPCProvider>
   )
 }

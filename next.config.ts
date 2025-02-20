@@ -1,3 +1,5 @@
+import './src/env'
+
 import type { NextConfig as Config } from 'next'
 
 import { withSentryConfig } from '@sentry/nextjs'
