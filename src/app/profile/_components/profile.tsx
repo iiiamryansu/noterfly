@@ -21,7 +21,7 @@ import { toast } from 'sonner'
 import { trpc } from '~/lib/trpc/client'
 import { UpdateProfileSchema } from '~/services/trpc/schemas/user'
 import { useUserStore } from '~/stores/user-store'
-import { compressImage } from '~/utils'
+import { compressImage } from '~/utils/compress-image'
 
 export function Profile() {
   const { isOpen, onOpen: openModal, onOpenChange: toggleModalState } = useDisclosure()
