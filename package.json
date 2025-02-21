@@ -76,6 +76,7 @@
     "@commitlint/cli": "^19.7.1",
     "@eslint/eslintrc": "^3.2.0",
     "@tailwindcss/typography": "^0.5.16",
+    "@tanstack/react-query-devtools": "^5.66.8",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/lodash-es": "^4.17.12",

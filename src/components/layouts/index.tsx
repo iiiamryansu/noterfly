@@ -1,5 +1,6 @@
 'use client'
 
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useRef, useState } from 'react'
 import { type ImperativePanelHandle, Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 
@@ -36,15 +37,19 @@ export default function AppLayout({ children, defaultLayout }: AppLayoutProps) {
   }
 
   return (
-    <PanelGroup autoSaveId="example" className="h-full bg-base-default" direction="horizontal" onLayout={persistLayout}>
-      <Panel className="max-w-64" collapsible defaultSize={defaultLayout[0]} minSize={25} ref={sidebarPanelRef}>
-        <Sidebar />
-      </Panel>
-      <PanelResizeHandle disabled />
-      <Panel className="grid grid-cols-1 grid-rows-[48px_1fr]" defaultSize={defaultLayout[1]}>
-        <Headbar isSidebarExpanded={isSidebarExpanded} toggleSidebarAction={toggleSidebar} />
-        <Main>{children}</Main>
-      </Panel>
-    </PanelGroup>
+    <>
+      <PanelGroup autoSaveId="example" className="h-full bg-base-default" direction="horizontal" onLayout={persistLayout}>
+        <Panel className="max-w-64" collapsible defaultSize={defaultLayout[0]} minSize={25} ref={sidebarPanelRef}>
+          <Sidebar />
+        </Panel>
+        <PanelResizeHandle disabled />
+        <Panel className="grid grid-cols-1 grid-rows-[48px_1fr]" defaultSize={defaultLayout[1]}>
+          <Headbar isSidebarExpanded={isSidebarExpanded} toggleSidebarAction={toggleSidebar} />
+          <Main>{children}</Main>
+        </Panel>
+      </PanelGroup>
+
+      <ReactQueryDevtools initialIsOpen={false} />
+    </>
   )
 }
