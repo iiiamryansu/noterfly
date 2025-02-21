@@ -3,11 +3,14 @@ import 'server-only'
 import type { ReactElement } from 'react'
 
 import { TRPCError } from '@trpc/server'
+import { Resend } from 'resend'
 import { z } from 'zod'
 
 import { VerificationEmail } from '~/components/templates'
-import { resend } from '~/lib/resend'
+import { env } from '~/env'
 import { createTRPCRouter, publicProcedure } from '~/services/trpc'
+
+let resend: null | Resend = null
 
 export const resendRouter = createTRPCRouter({
   sendVerificationEmail: publicProcedure
@@ -19,6 +22,10 @@ export const resendRouter = createTRPCRouter({
     )
     .mutation(async ({ input: { email, otp } }) => {
       try {
+        if (!resend) {
+          resend = new Resend(env.RESEND_API_KEY)
+        }
+
         await resend.emails.send({
           from: 'Noterfly <no-reply@resend.iamryansu.com>',
           react: VerificationEmail({ verificationCode: otp }) as ReactElement,
