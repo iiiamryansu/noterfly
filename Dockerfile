@@ -20,17 +20,16 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ARG DATABASE_URL
+
 ARG BETTER_AUTH_SECRET
 ARG BETTER_AUTH_URL
 ARG SKIP_ENV_VALIDATION
 
-ENV DATABASE_URL=${DATABASE_URL}
 ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
 ENV BETTER_AUTH_URL=${BETTER_AUTH_URL}
 ENV SKIP_ENV_VALIDATION=${SKIP_ENV_VALIDATION}
 
-RUN bunx prisma generate
+RUN bunx prisma generate --no-engine
 
 RUN \
   if [ -f bun.lock ]; then bun run build; \

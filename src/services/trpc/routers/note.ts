@@ -1,8 +1,8 @@
 import 'server-only'
+import { prisma } from '@prisma'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { prisma } from '~/lib/prisma'
 import { authedProcedure, createTRPCRouter } from '~/services/trpc'
 
 export const noteRouter = createTRPCRouter({

@@ -103,8 +103,5 @@
     "typescript": "^5.7.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.5"
-  },
-  "prisma": {
-    "schema": "src/lib/prisma/schema.prisma"
   }
 }

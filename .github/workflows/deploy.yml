@@ -50,7 +50,6 @@ jobs:
           else
             docker build \
             --build-arg SKIP_ENV_VALIDATION="1" \
-            --build-arg DATABASE_URL="$DATABASE_URL" \
             --build-arg BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET" \
             --build-arg BETTER_AUTH_URL="$BETTER_AUTH_URL" \
             --build-arg TIPTAP_PRO_TOKEN="$TIPTAP_PRO_TOKEN" \
