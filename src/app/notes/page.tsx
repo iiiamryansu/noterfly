@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from '@heroui/react'
+import { trpc } from '@trpc/c'
 import { format, formatDistanceToNow, isThisYear } from 'date-fns'
 import {
   DashboardSquare01Icon,
@@ -32,8 +33,6 @@ import {
 } from 'hugeicons-react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
-
-import { trpc } from '~/lib/trpc/client'
 
 const columns = [
   { name: 'Title', uid: 'title' },

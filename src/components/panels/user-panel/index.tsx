@@ -1,11 +1,11 @@
 'use client'
 
+import { signOut } from '@auth/c'
 import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, User } from '@heroui/react'
 import { ArrowDown01Icon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
-import { signOut } from '~/lib/auth/client'
 import { useUserStore } from '~/stores/user-store'
 
 export default function UserPanel() {

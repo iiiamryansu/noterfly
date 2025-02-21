@@ -1,6 +1,5 @@
+import { getLocale } from '@i18n/actions/getLocale'
 import { getRequestConfig } from 'next-intl/server'
-
-import { getLocale } from '~/lib/i18n/actions/getLocale'
 
 export default getRequestConfig(async () => {
   // Provide a static locale, fetch a user setting,
@@ -10,6 +9,6 @@ export default getRequestConfig(async () => {
 
   return {
     locale,
-    messages: (await import(`~/lib/i18n/messages/${locale}.json`)).default,
+    messages: (await import(`@i18n/messages/${locale}.json`)).default,
   }
 })

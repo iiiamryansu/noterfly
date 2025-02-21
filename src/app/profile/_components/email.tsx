@@ -1,10 +1,10 @@
 'use client'
 
+import { sendVerificationOtp, verifyEmail } from '@auth/c'
 import { Button, Chip, InputOtp, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { sendVerificationOtp, verifyEmail } from '~/lib/auth/client'
 import { useUserStore } from '~/stores/user-store'
 
 export function Email() {

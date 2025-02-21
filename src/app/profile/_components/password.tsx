@@ -3,10 +3,10 @@
 import type { FormEvent } from 'react'
 
 import { Button, Form, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/react'
+import { trpc } from '@trpc/c'
 import { useCallback, useState } from 'react'
 import { toast } from 'sonner'
 
-import { trpc } from '~/lib/trpc/client'
 import { UpdatePasswordSchema } from '~/services/trpc/schemas/user'
 
 export function Password() {

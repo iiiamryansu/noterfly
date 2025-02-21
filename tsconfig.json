@@ -19,8 +19,15 @@
       }
     ],
     "paths": {
-      "~/*": ["./src/*"],
-      "@prisma": ["./prisma"]
+      "@auth/c": ["./src/lib/auth/client"],
+      "@auth/s": ["./src/lib/auth/server"],
+      "@env": ["./src/env"],
+      "@i18n/*": ["./src/lib/i18n/*"],
+      "@prisma": ["./prisma"],
+      "@s3": ["./src/lib/s3"],
+      "@trpc/c": ["./src/lib/trpc/client"],
+      "@trpc/s": ["./src/lib/trpc/server"],
+      "~/*": ["./src/*"]
     }
   },
   "exclude": ["node_modules"],

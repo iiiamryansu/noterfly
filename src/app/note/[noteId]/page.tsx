@@ -2,13 +2,13 @@
 
 import { ScrollShadow, Skeleton } from '@heroui/react'
 import { BreadcrumbItem, Breadcrumbs, Image } from '@heroui/react'
+import { trpc } from '@trpc/c'
 import { debounce } from 'es-toolkit'
 import { Home01Icon, Note01Icon, NotebookIcon } from 'hugeicons-react'
 import { useParams } from 'next/navigation'
 import { useEffect, useMemo, useRef } from 'react'
 
 import Editor from '~/features/editor'
-import { trpc } from '~/lib/trpc/client'
 
 export default function NotePage() {
   const { noteId } = useParams()

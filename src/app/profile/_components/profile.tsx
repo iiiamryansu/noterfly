@@ -14,11 +14,11 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@heroui/react'
+import { trpc } from '@trpc/c'
 import { Camera01Icon } from 'hugeicons-react'
 import { useCallback, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { trpc } from '~/lib/trpc/client'
 import { UpdateProfileSchema } from '~/services/trpc/schemas/user'
 import { useUserStore } from '~/stores/user-store'
 import { compressImage } from '~/utils/compress-image'

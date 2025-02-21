@@ -5,11 +5,11 @@ import type { ChangeEvent } from 'react'
 
 import { Button } from '@heroui/react'
 import { NodeViewWrapper } from '@tiptap/react'
+import { trpc } from '@trpc/c'
 import { ImageUploadIcon } from 'hugeicons-react'
 import { useCallback, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { trpc } from '~/lib/trpc/client'
 import { compressImage } from '~/utils/compress-image'
 
 interface ImageUploaderBlockProps {

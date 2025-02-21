@@ -1,13 +1,12 @@
 'use client'
 
+import type { Locale } from '@i18n/config'
+
 import { CheckIcon, LanguageIcon } from '@heroicons/react/24/outline'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/react'
+import { setLocale } from '@i18n/actions/setLocale'
+import { locales } from '@i18n/config'
 import { useLocale } from 'next-intl'
-
-import type { Locale } from '~/lib/i18n/config'
-
-import { setLocale } from '~/lib/i18n/actions/setLocale'
-import { locales } from '~/lib/i18n/config'
 
 export default function LanguageSelector() {
   const currentLocale = useLocale()

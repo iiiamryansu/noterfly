@@ -1,9 +1,9 @@
 import 'server-only'
+import { auth } from '@auth/s'
 import { prisma } from '@prisma'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { auth } from '~/lib/auth/server'
 import { authedProcedure, createTRPCRouter, publicProcedure } from '~/services/trpc'
 import { UpdatePasswordSchema, UpdateProfileSchema } from '~/services/trpc/schemas/user'
 

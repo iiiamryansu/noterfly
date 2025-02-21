@@ -1,12 +1,11 @@
 'use client'
 
 import { Button } from '@heroui/react'
+import { trpc } from '@trpc/c'
 import { Home01Icon, Note01Icon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { v4 as uuid } from 'uuid'
-
-import { trpc } from '~/lib/trpc/client'
 
 export default function MenuPanel() {
   const utils = trpc.useUtils()

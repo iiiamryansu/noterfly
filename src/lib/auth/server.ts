@@ -1,11 +1,10 @@
 import { prisma } from '@prisma'
+import { trpc } from '@trpc/s'
 import { betterAuth } from 'better-auth'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { nextCookies } from 'better-auth/next-js'
 import { username } from 'better-auth/plugins'
 import { emailOTP } from 'better-auth/plugins'
-
-import { trpc } from '~/lib/trpc/server'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {

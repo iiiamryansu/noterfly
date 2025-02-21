@@ -1,5 +1,6 @@
 'use client'
 
+import { deleteUser } from '@auth/c'
 import { Button, Divider } from '@heroui/react'
 import { delay } from 'es-toolkit'
 import { useRouter } from 'next/navigation'
@@ -9,7 +10,6 @@ import { toast } from 'sonner'
 import { Email } from '~/app/profile/_components/email'
 import { Password } from '~/app/profile/_components/password'
 import { Profile } from '~/app/profile/_components/profile'
-import { deleteUser } from '~/lib/auth/client'
 
 export default function ProfilePage() {
   const [isDeleting, startTransition] = useTransition()

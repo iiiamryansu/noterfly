@@ -2,12 +2,12 @@ import 'server-only'
 
 import type { ReactElement } from 'react'
 
+import { env } from '@env'
 import { TRPCError } from '@trpc/server'
 import { Resend } from 'resend'
 import { z } from 'zod'
 
 import { VerificationEmail } from '~/components/templates'
-import { env } from '~/env'
 import { createTRPCRouter, publicProcedure } from '~/services/trpc'
 
 let resend: null | Resend = null

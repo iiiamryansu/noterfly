@@ -1,13 +1,12 @@
 'use client'
 
+import { signIn } from '@auth/c'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { Button, Form, Input } from '@heroui/react'
 import Link from 'next/link'
 import { type FormEvent, useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
-
-import { signIn } from '~/lib/auth/client'
 
 const signInFormSchema = z.object({
   email: z.string().min(1, 'Email is required').email('Please enter a valid email'),

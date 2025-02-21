@@ -1,7 +1,6 @@
+import { User } from '@auth/c'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-
-import type { User } from '~/lib/auth/client'
 
 type UserStore = {
   currentUser: null | User

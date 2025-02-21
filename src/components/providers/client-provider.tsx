@@ -1,11 +1,11 @@
 'use client'
 
 import { HeroUIProvider } from '@heroui/system'
+import { trpc } from '@trpc/c'
 import { ThemeProvider } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { trpc } from '~/lib/trpc/client'
 import { useUserStore } from '~/stores/user-store'
 
 declare module '@react-types/shared' {

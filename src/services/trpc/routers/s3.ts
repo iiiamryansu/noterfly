@@ -1,12 +1,12 @@
 import 'server-only'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { env } from '@env'
+import { S3 } from '@s3'
 import { TRPCError } from '@trpc/server'
 import { v4 as uuid } from 'uuid'
 import { z } from 'zod'
 
-import { env } from '~/env'
-import { S3 } from '~/lib/s3'
 import { authedProcedure, createTRPCRouter } from '~/services/trpc'
 
 export const s3Router = createTRPCRouter({
