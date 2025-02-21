@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     passWithNoTests: true,
-    pool: 'forks',
+    pool: 'vmForks',
     poolOptions: {
       threads: {
         singleThread: true,
