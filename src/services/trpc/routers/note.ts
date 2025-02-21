@@ -6,6 +6,56 @@ import { prisma } from '~/lib/prisma'
 import { authedProcedure, createTRPCRouter } from '~/services/trpc'
 
 export const noteRouter = createTRPCRouter({
+  createNote: authedProcedure
+    .input(
+      z.object({
+        noteId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx: { userId }, input: { noteId } }) => {
+      try {
+        const note = await prisma.note.create({
+          data: {
+            content: `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Hello, world! 🌏"}]}]}`,
+            id: noteId,
+            title: 'New Note',
+            userId,
+          },
+        })
+
+        return note
+      } catch (error: unknown) {
+        throw new TRPCError({
+          cause: error,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create note.',
+        })
+      }
+    }),
+
+  deleteNote: authedProcedure
+    .input(
+      z.object({
+        noteId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx: { userId }, input: { noteId } }) => {
+      try {
+        await prisma.note.delete({
+          where: {
+            id: noteId,
+            userId,
+          },
+        })
+      } catch (error: unknown) {
+        throw new TRPCError({
+          cause: error,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete note.',
+        })
+      }
+    }),
+
   getNote: authedProcedure
     .input(
       z.object({

@@ -4,13 +4,26 @@ import { Button } from '@heroui/react'
 import { Home01Icon, Note01Icon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
+import { v4 as uuid } from 'uuid'
 
-import { createNewNote } from '~/actions/note'
+import { trpc } from '~/lib/trpc/client'
 
 export default function MenuPanel() {
+  const utils = trpc.useUtils()
+
   const router = useRouter()
 
   const t = useTranslations('Layout.Sidebar.MenuPanel')
+
+  const { mutate: createNote } = trpc.note.createNote.useMutation({
+    onMutate: ({ noteId }) => {
+      router.push(`/note/${noteId}`)
+    },
+    onSuccess: () => {
+      utils.note.getNote.invalidate()
+      utils.note.getNotes.invalidate()
+    },
+  })
 
   return (
     <section className="flex flex-col gap-1">
@@ -25,7 +38,7 @@ export default function MenuPanel() {
       </Button>
       <Button
         className="justify-start"
-        onPress={createNewNote}
+        onPress={() => createNote({ noteId: uuid() })}
         size="sm"
         startContent={<Note01Icon className="size-4" />}
         variant="light"
