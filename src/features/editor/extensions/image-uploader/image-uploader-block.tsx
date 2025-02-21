@@ -1,9 +1,16 @@
-import { Button } from '@heroui/react'
-import { type Editor, NodeViewWrapper } from '@tiptap/react'
-import { ImageUploadIcon } from 'hugeicons-react'
-import { type ChangeEvent, useCallback, useRef } from 'react'
+'use client'
 
-import useImageUploader from '~/features/editor/extensions/image-uploader/use-image-uploader'
+import type { Editor } from '@tiptap/react'
+import type { ChangeEvent } from 'react'
+
+import { Button } from '@heroui/react'
+import { NodeViewWrapper } from '@tiptap/react'
+import { ImageUploadIcon } from 'hugeicons-react'
+import { useCallback, useRef, useState } from 'react'
+import { toast } from 'sonner'
+
+import { trpc } from '~/lib/trpc/client'
+import { compressImage } from '~/utils/compress-image'
 
 interface ImageUploaderBlockProps {
   editor: Editor
@@ -12,7 +19,9 @@ interface ImageUploaderBlockProps {
 }
 
 export default function ImageUploaderBlock({ editor, getPos }: ImageUploaderBlockProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const imageInputRef = useRef<HTMLInputElement>(null)
+
+  const [selectedImage, setSelectedImage] = useState<File | null>(null)
 
   const setImage = useCallback(
     (imageUrl: string) => {
@@ -26,32 +35,60 @@ export default function ImageUploaderBlock({ editor, getPos }: ImageUploaderBloc
     [editor, getPos],
   )
 
-  const { isUploading, uploadImage } = useImageUploader({ setImage })
+  /* ---------------------------------- 上传图片 ---------------------------------- */
+  const { isPending: isUploadingImage, mutate: uploadImage } = trpc.s3.getSignedUrl.useMutation({
+    onError: () => {
+      toast.error('Unable to upload image. 🫠')
+    },
+    onSuccess: async ({ signedUrl, url }) => {
+      try {
+        const res = await fetch(signedUrl, {
+          body: await compressImage(selectedImage!, 1200),
+          headers: {
+            'Content-Type': selectedImage!.type,
+          },
+          method: 'PUT',
+        })
 
-  const handleFileChange = useCallback(
+        if (res.ok) {
+          setImage(url)
+        } else {
+          toast.error('Unable to upload image. 🫠')
+        }
+      } catch {
+        toast.error('Unable to upload image. 🫠')
+      }
+    },
+  })
+
+  /* --------------------------------- 处理图片变化 --------------------------------- */
+  const handleImageChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files.length > 0) {
-        uploadImage(e.target.files[0])
+        setSelectedImage(e.target.files[0]) // 更新已选中的图片状态
+
+        uploadImage({ type: 'image' }) // 上传图片
       }
     },
     [uploadImage],
   )
 
+  /* ----------------------------------------------------------------------------- */
+
   return (
     <NodeViewWrapper>
       <div className="flex h-40 items-center justify-center rounded-small border border-divider">
         <Button
-          isDisabled={isUploading}
-          isLoading={isUploading}
-          onPress={() => fileInputRef.current?.click()}
+          isLoading={isUploadingImage}
+          onPress={() => imageInputRef.current?.click()}
           size="sm"
-          startContent={isUploading ? null : <ImageUploadIcon className="size-4" />}
+          startContent={isUploadingImage ? null : <ImageUploadIcon className="size-4" />}
           variant="solid"
         >
-          {isUploading ? 'Uploading...' : 'Upload'}
+          {isUploadingImage ? 'Uploading...' : 'Upload'}
         </Button>
 
-        <input accept="image/*" className="hidden" onChange={handleFileChange} ref={fileInputRef} type="file" />
+        <input accept="image/*" className="hidden" onChange={handleImageChange} ref={imageInputRef} type="file" />
       </div>
     </NodeViewWrapper>
   )
