@@ -50,6 +50,7 @@ jobs:
           else
             docker build -t $IMAGE \
               --build-arg TIPTAP_PRO_TOKEN="$TIPTAP_PRO_TOKEN" \
+              --build-arg BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET" \
               .
 
             docker push $IMAGE
@@ -67,7 +68,6 @@ jobs:
             fi
 
             docker run -d -p 3000:3000 --name '"$APP_NAME"' \
-              -e BETTER_AUTH_SECRET='"'$BETTER_AUTH_SECRET'"' \
               -e BETTER_AUTH_URL='"'$BETTER_AUTH_URL'"' \
               -e CLOUDFLARE_R2_ACCESS_KEY_ID='"'$CLOUDFLARE_R2_ACCESS_KEY_ID'"' \
               -e CLOUDFLARE_R2_ACCOUNT_ID='"'$CLOUDFLARE_R2_ACCOUNT_ID'"' \

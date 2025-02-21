@@ -4,6 +4,7 @@ FROM oven/bun:1 AS base
 
 FROM base AS deps
 WORKDIR /app
+ARG TIPTAP_PRO_TOKEN
 
 # Install Prisma Client
 
@@ -11,7 +12,6 @@ COPY prisma ./
 
 # Install dependencies based on the preferred package manager
 COPY package.json bun.lock .npmrc ./
-ARG TIPTAP_PRO_TOKEN
 RUN \
   if [ -f bun.lock ]; then TIPTAP_PRO_TOKEN=${TIPTAP_PRO_TOKEN} bun install --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
@@ -21,10 +21,15 @@ RUN \
 
 FROM base AS builder
 WORKDIR /app
+ARG BETTER_AUTH_SECRET
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+
 ENV NEXT_TELEMETRY_DISABLED=1
+
+ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
 
 RUN \
 if [ -f bun.lock ]; then SKIP_ENV_VALIDATION=1 bun run build; \
@@ -40,7 +45,6 @@ ENV NODE_ENV=production
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV BETTER_AUTH_SECRET=
 ENV BETTER_AUTH_URL=
 ENV CLOUDFLARE_R2_ACCESS_KEY_ID=
 ENV CLOUDFLARE_R2_ACCOUNT_ID=
