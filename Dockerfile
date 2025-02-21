@@ -1,10 +1,13 @@
-# syntax=docker.io/docker/dockerfile:1
-
 FROM oven/bun:1 AS base
 
-# Install dependencies only when needed
+##### DEPENDENCIES #####
+
 FROM base AS deps
 WORKDIR /app
+
+# Install Prisma Client
+
+COPY prisma ./
 
 # Install dependencies based on the preferred package manager
 COPY package.json bun.lock .npmrc ./
@@ -14,51 +17,47 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-# Rebuild the source code only when needed
+##### BUILDER #####
+
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-
-ARG BETTER_AUTH_SECRET
-ARG BETTER_AUTH_URL
-ARG SKIP_ENV_VALIDATION
-
-ENV BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
-ENV BETTER_AUTH_URL=${BETTER_AUTH_URL}
-ENV SKIP_ENV_VALIDATION=${SKIP_ENV_VALIDATION}
-
-RUN bunx prisma generate --no-engine
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN \
-  if [ -f bun.lock ]; then bun run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+if [ -f bun.lock ]; then SKIP_ENV_VALIDATION=1 bun run build; \
+else echo "Lockfile not found." && exit 1; \
+fi
 
-# Production image, copy all the files and run next
+##### RUNNER #####
+
 FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+ENV NEXT_TELEMETRY_DISABLED=1
 
+ENV BETTER_AUTH_SECRET=
+ENV BETTER_AUTH_URL=
+ENV CLOUDFLARE_R2_ACCESS_KEY_ID=
+ENV CLOUDFLARE_R2_ACCOUNT_ID=
+ENV CLOUDFLARE_R2_BUCKET=
+ENV CLOUDFLARE_R2_PUBLIC_URL=
+ENV CLOUDFLARE_R2_SECRET_ACCESS_KEY=
+ENV DATABASE_URL=
+ENV RESEND_API_KEY=
+
+COPY --from=builder /app/next.config.ts ./
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 EXPOSE 3000
-
 ENV PORT=3000
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
-ENV HOSTNAME="0.0.0.0"
 CMD ["bun", "server.js"]

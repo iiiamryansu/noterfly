@@ -12,11 +12,11 @@ jobs:
       APP_NAME: ${{ secrets.APP_NAME }}
       BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
       BETTER_AUTH_URL: ${{ secrets.BETTER_AUTH_URL }}
-      CLOUDFLARE_R2_BUCKET: ${{ secrets.CLOUDFLARE_R2_BUCKET }}
       CLOUDFLARE_R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}
       CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
-      CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+      CLOUDFLARE_R2_BUCKET: ${{ secrets.CLOUDFLARE_R2_BUCKET }}
       CLOUDFLARE_R2_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_PUBLIC_URL }}
+      CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       IMAGE: '${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}:${{ github.sha }}'
@@ -48,13 +48,9 @@ jobs:
           if [ $EXISTING_IMAGE -eq 200 ]; then
             echo "Image with tag $TAG already exists, skipping build."
           else
-            docker build \
-            --build-arg SKIP_ENV_VALIDATION="1" \
-            --build-arg BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET" \
-            --build-arg BETTER_AUTH_URL="$BETTER_AUTH_URL" \
-            --build-arg TIPTAP_PRO_TOKEN="$TIPTAP_PRO_TOKEN" \
-            -t $IMAGE \
-            .
+            docker build -t $IMAGE \
+              --build-arg TIPTAP_PRO_TOKEN="$TIPTAP_PRO_TOKEN" \
+              .
 
             docker push $IMAGE
           fi
@@ -70,18 +66,16 @@ jobs:
               docker stop '"$APP_NAME"' && docker rm '"$APP_NAME"';
             fi
 
-            docker run -d \
-              -e DATABASE_URL='"'$DATABASE_URL'"' \
+            docker run -d -p 3000:3000 --name '"$APP_NAME"' \
               -e BETTER_AUTH_SECRET='"'$BETTER_AUTH_SECRET'"' \
               -e BETTER_AUTH_URL='"'$BETTER_AUTH_URL'"' \
-              -e CLOUDFLARE_R2_BUCKET='"'$CLOUDFLARE_R2_BUCKET'"' \
-              -e CLOUDFLARE_R2_ACCOUNT_ID='"'$CLOUDFLARE_R2_ACCOUNT_ID'"' \
               -e CLOUDFLARE_R2_ACCESS_KEY_ID='"'$CLOUDFLARE_R2_ACCESS_KEY_ID'"' \
-              -e CLOUDFLARE_R2_SECRET_ACCESS_KEY='"'$CLOUDFLARE_R2_SECRET_ACCESS_KEY'"' \
+              -e CLOUDFLARE_R2_ACCOUNT_ID='"'$CLOUDFLARE_R2_ACCOUNT_ID'"' \
+              -e CLOUDFLARE_R2_BUCKET='"'$CLOUDFLARE_R2_BUCKET'"' \
               -e CLOUDFLARE_R2_PUBLIC_URL='"'$CLOUDFLARE_R2_PUBLIC_URL'"' \
+              -e CLOUDFLARE_R2_SECRET_ACCESS_KEY='"'$CLOUDFLARE_R2_SECRET_ACCESS_KEY'"' \
+              -e DATABASE_URL='"'$DATABASE_URL'"' \
               -e RESEND_API_KEY='"'$RESEND_API_KEY'"' \
-              -p 3000:3000 \
-              --name '"$APP_NAME"' \
               '"$IMAGE"';
           '
 
