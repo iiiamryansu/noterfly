@@ -12,7 +12,7 @@ const config: Config = {
     ignoreDuringBuilds: true,
   },
   experimental: {
-    optimizePackageImports: ['@heroui/react', '@react-aria/utils', 'hugeicons-react'],
+    optimizePackageImports: ['@heroui/react', 'hugeicons-react'],
   },
   output: 'standalone',
 }
