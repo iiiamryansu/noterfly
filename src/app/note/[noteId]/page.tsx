@@ -66,7 +66,7 @@ export default function NotePage() {
   }, [noteId, updateNote])
 
   return (
-    <ScrollShadow className="grid h-full grid-cols-1 grid-rows-[332px_1fr] gap-12" hideScrollBar>
+    <ScrollShadow className="grid h-full grid-cols-1 grid-rows-[332px_1fr] gap-12 focus-visible:outline-none" hideScrollBar>
       <header className="mx-auto grid max-w-[1024px] grid-cols-1 grid-rows-[40px_192px_36px_64px] px-8">
         <div className="flex h-10 items-center justify-center">
           {!isLoadingNote && (
