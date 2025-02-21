@@ -5,11 +5,9 @@ import { TRPCError } from '@trpc/server'
 import { v4 as uuid } from 'uuid'
 import { z } from 'zod'
 
+import { env } from '~/env'
 import { S3 } from '~/lib/s3'
 import { authedProcedure, createTRPCRouter } from '~/services/trpc'
-
-const CLOUDFLARE_R2_BUCKET = process.env.CLOUDFLARE_R2_BUCKET as string
-const CLOUDFLARE_R2_PUBLIC_URL = process.env.CLOUDFLARE_R2_PUBLIC_URL as string
 
 export const s3Router = createTRPCRouter({
   getSignedUrl: authedProcedure
@@ -34,12 +32,12 @@ export const s3Router = createTRPCRouter({
           path = `users/${userId}/files/images/${uuid()}`
         }
 
-        const url = `${CLOUDFLARE_R2_PUBLIC_URL}/${path}`
+        const url = `${env.CLOUDFLARE_R2_PUBLIC_URL}/${path}`
 
         const signedUrl = await getSignedUrl(
           S3,
           new PutObjectCommand({
-            Bucket: CLOUDFLARE_R2_BUCKET,
+            Bucket: env.CLOUDFLARE_R2_BUCKET,
             Key: path,
           }),
           {

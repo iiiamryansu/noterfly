@@ -53,7 +53,6 @@ jobs:
             --build-arg BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET" \
             --build-arg BETTER_AUTH_URL="$BETTER_AUTH_URL" \
             --build-arg TIPTAP_PRO_TOKEN="$TIPTAP_PRO_TOKEN" \
-            --build-arg RESEND_API_KEY="$RESEND_API_KEY" \
             -t $IMAGE \
             .
 
