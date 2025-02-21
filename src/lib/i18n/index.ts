@@ -1,6 +1,6 @@
 import { getRequestConfig } from 'next-intl/server'
 
-import { getLocale } from '~/actions/i18n'
+import { getLocale } from '~/lib/i18n/actions/getLocale'
 
 export default getRequestConfig(async () => {
   // Provide a static locale, fetch a user setting,
