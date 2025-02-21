@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid'
 
 import { ColumnLayout } from '~/features/editor/extensions/columns'
 import { getRenderContainer } from '~/features/editor/utils'
-import { cn } from '~/utils'
+import { cn } from '~/utils/cn'
 
 export default function ColumnsMenu({ appendTo, editor }: { appendTo: RefObject<HTMLDivElement>; editor: Editor | null }) {
   const getReferenceClientRect = useCallback(() => {

@@ -14,7 +14,7 @@ import {
 } from 'hugeicons-react'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { cn } from '~/utils'
+import { cn } from '~/utils/cn'
 
 let notes = [
   {

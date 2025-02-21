@@ -3,7 +3,7 @@
 import { motion, Variants } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-import { cn } from '~/utils'
+import { cn } from '~/utils/cn'
 
 interface TypewriterProps {
   className?: string

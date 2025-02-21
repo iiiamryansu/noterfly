@@ -5,7 +5,7 @@ import { type RefObject, useCallback } from 'react'
 import { sticky } from 'tippy.js'
 import { v4 as uuid } from 'uuid'
 
-import { cn } from '~/utils'
+import { cn } from '~/utils/cn'
 
 export default function ImageMenu({ appendTo, editor }: { appendTo: RefObject<HTMLDivElement>; editor: Editor | null }) {
   const shouldShow = useCallback(() => {

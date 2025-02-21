@@ -17,7 +17,7 @@ import {
 import { useCallback } from 'react'
 
 import { hasSelectedText } from '~/features/editor/utils'
-import { cn } from '~/utils'
+import { cn } from '~/utils/cn'
 
 import ColorSelector from './color-selector'
 import LinkEditor from './link-editor'

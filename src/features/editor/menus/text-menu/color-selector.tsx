@@ -5,7 +5,7 @@ import type { Editor } from '@tiptap/react'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/react'
 import { ArrowDown01Icon } from 'hugeicons-react'
 
-import { cn } from '~/utils'
+import { cn } from '~/utils/cn'
 
 const textColors = [
   { key: 'default', label: 'Default', value: 'var(--editor-text-default)' },
