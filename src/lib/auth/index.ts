@@ -4,8 +4,8 @@ import { nextCookies } from 'better-auth/next-js'
 import { username } from 'better-auth/plugins'
 import { emailOTP } from 'better-auth/plugins'
 
-import { sendVerificationEmail } from '~/actions/auth'
 import { prisma } from '~/lib/prisma'
+import { trpc } from '~/lib/trpc/server'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -26,7 +26,7 @@ export const auth = betterAuth({
           // Send the OTP for sign-in
         } else if (type === 'email-verification') {
           // Send the OTP for email verification
-          sendVerificationEmail(email, otp)
+          await trpc.resend.sendVerificationEmail({ email, otp })
         } else {
           // Send the OTP for password reset
         }

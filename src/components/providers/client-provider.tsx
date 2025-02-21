@@ -23,11 +23,11 @@ export default function ClientProvider({ children }: ClientProviderProps) {
 
   const setCurrentUser = useUserStore((state) => state.setCurrentUser)
 
-  const { data: currentUser } = trpc.user.getCurrentUser.useQuery()
+  const { data: user } = trpc.user.getUser.useQuery()
 
   useEffect(() => {
-    if (currentUser) setCurrentUser(currentUser)
-  }, [currentUser, setCurrentUser])
+    if (user) setCurrentUser(user)
+  }, [user, setCurrentUser])
 
   /* ------------------------------ 避免水合阶段的不匹配问题 ------------------------------ */
 
