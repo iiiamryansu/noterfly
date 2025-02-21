@@ -5,7 +5,7 @@ import { cache } from 'react'
 
 import type { AppRouter } from '~/services/trpc/routers'
 
-import { auth } from '~/lib/auth'
+import { auth } from '~/lib/auth/server'
 import { createQueryClient } from '~/lib/trpc/query-client'
 import { createTRPCContext } from '~/services/trpc'
 import { createCaller } from '~/services/trpc/routers'

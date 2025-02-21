@@ -4,7 +4,7 @@ import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import { headers } from 'next/headers'
 
 import { env } from '~/env'
-import { auth } from '~/lib/auth'
+import { auth } from '~/lib/auth/server'
 import { createTRPCContext } from '~/services/trpc'
 import { appRouter } from '~/services/trpc/routers'
 

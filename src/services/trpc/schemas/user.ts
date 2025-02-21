@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { User } from '~/lib/auth'
+import { User } from '~/lib/auth/server'
 
 type UpdatableUserFields = Pick<User, 'image' | 'name'>
 
