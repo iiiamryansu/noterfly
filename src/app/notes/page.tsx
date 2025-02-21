@@ -34,7 +34,7 @@ import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 
 import { deleteNoteById } from '~/actions/note'
-import { useNoteStore } from '~/stores/note-store'
+import { trpc } from '~/lib/trpc/client'
 
 const columns = [
   { name: 'Title', uid: 'title' },
@@ -44,7 +44,7 @@ const columns = [
 ]
 
 export default function NotesPage() {
-  const notes = useNoteStore((state) => state.notes)
+  const { data: notes, isLoading: isLoadingNotes } = trpc.note.getNotes.useQuery()
 
   const router = useRouter()
 
@@ -121,6 +121,8 @@ export default function NotesPage() {
       }
     }
   }, [])
+
+  if (isLoadingNotes) return null
 
   return (
     <>

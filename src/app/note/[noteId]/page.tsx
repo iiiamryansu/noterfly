@@ -2,61 +2,68 @@
 
 import { ScrollShadow, Skeleton } from '@heroui/react'
 import { BreadcrumbItem, Breadcrumbs, Image } from '@heroui/react'
-import axios from 'axios'
+import { debounce } from 'es-toolkit'
 import { Home01Icon, Note01Icon, NotebookIcon } from 'hugeicons-react'
-import { debounce } from 'lodash-es'
 import { useParams } from 'next/navigation'
-import { type ChangeEvent, useEffect } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import Editor from '~/features/editor'
-import { useNoteStore } from '~/stores/note-store'
-
-const updateTitle = debounce((noteId: string, newTitle: string) => {
-  axios.patch(`/api/note/${noteId}`, { title: newTitle })
-}, 1000)
-
-const updateContent = debounce((noteId: string, newContent: string) => {
-  axios.patch(`/api/note/${noteId}`, { content: newContent })
-}, 1000)
+import { trpc } from '~/lib/trpc/client'
 
 export default function NotePage() {
   const { noteId } = useParams()
 
-  const { currentNote, isLoadingNote, setCurrentNote, setIsLoadingNote } = useNoteStore((state) => state)
+  const contentRef = useRef<string>('')
 
-  /* ---------------------------- Get Current Note ---------------------------- */
-  useEffect(() => {
-    setIsLoadingNote(true)
+  const utils = trpc.useUtils()
 
-    axios
-      .get(`/api/note/${noteId}`)
-      .then((res) => {
-        if (res.data.success) {
-          const note = res.data.payload
+  const { data: note, isLoading: isLoadingNote } = trpc.note.getNote.useQuery(
+    {
+      noteId: noteId as string,
+    },
+    {
+      staleTime: 5 * 1000,
+    },
+  )
 
-          setCurrentNote(note)
-        }
+  const { mutate: updateNote } = trpc.note.updateNote.useMutation({
+    onSuccess: (data) => {
+      utils.note.getNote.setData({ noteId: noteId as string }, (prev) => {
+        if (prev) return { ...prev, ...data }
       })
-      .finally(() => setIsLoadingNote(false))
-  }, [noteId, setIsLoadingNote, setCurrentNote])
+    },
+  })
 
-  function handleUpdateTitle(e: ChangeEvent<HTMLInputElement>) {
-    const newTitle = e.target.value
+  const debouncedUpdateNote = useMemo(() => {
+    return debounce((data: { content?: string; title?: string }) => {
+      updateNote({ data, noteId: noteId as string })
+    }, 1000)
+  }, [noteId, updateNote])
 
-    setCurrentNote({ title: newTitle })
-
-    if (noteId) {
-      updateTitle(noteId as string, newTitle)
-    }
+  function handleUpdateNote(data: { content?: string; title?: string }) {
+    debouncedUpdateNote(data)
   }
 
-  function handleUpdateContent(newContent: string) {
-    setCurrentNote({ content: newContent })
-
-    if (noteId) {
-      updateContent(noteId as string, newContent)
+  useEffect(() => {
+    const saveContent = () => {
+      if (contentRef.current) {
+        updateNote({
+          data: { content: contentRef.current },
+          noteId: noteId as string,
+        })
+      }
     }
-  }
+
+    window.addEventListener('beforeunload', saveContent)
+    window.addEventListener('popstate', saveContent)
+
+    return () => {
+      saveContent()
+
+      window.removeEventListener('beforeunload', saveContent)
+      window.removeEventListener('popstate', saveContent)
+    }
+  }, [noteId, updateNote])
 
   return (
     <ScrollShadow className="grid h-full grid-cols-1 grid-rows-[332px_1fr] gap-12" hideScrollBar>
@@ -108,8 +115,8 @@ export default function NotePage() {
         ) : (
           <input
             className="mx-auto h-16 w-[800px] border-b border-divider bg-transparent text-4xl font-semibold selection:bg-primary focus-visible:outline-none"
-            onChange={handleUpdateTitle}
-            value={currentNote?.title}
+            defaultValue={note?.title}
+            onChange={(e) => handleUpdateNote({ title: e.target.value })}
           />
         )}
       </header>
@@ -129,7 +136,7 @@ export default function NotePage() {
           </div>
         </div>
       ) : (
-        currentNote && <Editor handleUpdateAction={handleUpdateContent} rawContent={currentNote.content} />
+        note && <Editor contentRef={contentRef} handleUpdateAction={handleUpdateNote} rawContent={note.content} />
       )}
     </ScrollShadow>
   )

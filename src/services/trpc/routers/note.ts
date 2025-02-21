@@ -1,0 +1,85 @@
+import 'server-only'
+import { TRPCError } from '@trpc/server'
+import { z } from 'zod'
+
+import { prisma } from '~/lib/prisma'
+import { authedProcedure, createTRPCRouter } from '~/services/trpc'
+
+export const noteRouter = createTRPCRouter({
+  getNote: authedProcedure
+    .input(
+      z.object({
+        noteId: z.string(),
+      }),
+    )
+    .query(async ({ ctx: { userId }, input: { noteId } }) => {
+      try {
+        const note = await prisma.note.findUnique({
+          where: {
+            id: noteId,
+            userId,
+          },
+        })
+
+        return note
+      } catch (error: unknown) {
+        throw new TRPCError({
+          cause: error,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to get note.',
+        })
+      }
+    }),
+
+  getNotes: authedProcedure.query(async ({ ctx: { userId } }) => {
+    try {
+      const notes = await prisma.note.findMany({
+        where: {
+          userId,
+        },
+      })
+
+      return notes
+    } catch (error: unknown) {
+      throw new TRPCError({
+        cause: error,
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to get notes.',
+      })
+    }
+  }),
+
+  updateNote: authedProcedure
+    .input(
+      z.object({
+        data: z.object({
+          content: z.string().optional(),
+          title: z.string().optional(),
+        }),
+        noteId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx: { userId }, input: { data, noteId } }) => {
+      try {
+        const updatedNote = await prisma.note.update({
+          data,
+          select: {
+            content: true,
+            title: true,
+          },
+          where: {
+            id: noteId,
+            userId,
+          },
+        })
+
+        return updatedNote
+      } catch (error: unknown) {
+        throw new TRPCError({
+          cause: error,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to update note.',
+        })
+      }
+    }),
+})

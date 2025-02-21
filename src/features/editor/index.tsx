@@ -12,11 +12,12 @@ import EditorTextMenu from '~/features/editor/menus/text-menu'
 import '~/styles/tiptap.css'
 
 interface EditorProps {
-  handleUpdateAction: (newContent: string) => void
+  contentRef: RefObject<string>
+  handleUpdateAction: (data: { content?: string; title?: string }) => void
   rawContent: string
 }
 
-export default function Editor({ handleUpdateAction, rawContent }: EditorProps) {
+export default function Editor({ contentRef, handleUpdateAction, rawContent }: EditorProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null)
 
   const editor = useEditor({
@@ -29,7 +30,9 @@ export default function Editor({ handleUpdateAction, rawContent }: EditorProps) 
     extensions: EXTENSIONS,
     immediatelyRender: true,
     onUpdate: ({ editor }) => {
-      handleUpdateAction(JSON.stringify(editor.getJSON()))
+      contentRef.current = JSON.stringify(editor.getJSON())
+
+      handleUpdateAction({ content: JSON.stringify(editor.getJSON()) })
     },
   })
 

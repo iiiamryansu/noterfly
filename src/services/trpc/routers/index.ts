@@ -1,4 +1,5 @@
 import { createCallerFactory, createTRPCRouter } from '~/services/trpc'
+import { noteRouter } from '~/services/trpc/routers/note'
 import { postRouter } from '~/services/trpc/routers/post'
 import { s3Router } from '~/services/trpc/routers/s3'
 import { userRouter } from '~/services/trpc/routers/user'
@@ -9,6 +10,7 @@ import { userRouter } from '~/services/trpc/routers/user'
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
+  note: noteRouter,
   post: postRouter,
   s3: s3Router,
   user: userRouter,
