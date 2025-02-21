@@ -3,7 +3,7 @@
 import type { Editor } from '@tiptap/react'
 import type { ChangeEvent } from 'react'
 
-import { Button } from '@heroui/react'
+import { Button } from '@heroui/button'
 import { NodeViewWrapper } from '@tiptap/react'
 import { trpc } from '@trpc/c'
 import { ImageUploadIcon } from 'hugeicons-react'

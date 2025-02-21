@@ -1,6 +1,6 @@
 'use client'
 
-import { Divider } from '@heroui/react'
+import { Divider } from '@heroui/divider'
 
 import ControlPanel from '~/components/panels/control-panel'
 import LogoPanel from '~/components/panels/logo-panel'

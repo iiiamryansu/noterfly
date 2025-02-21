@@ -11,6 +11,9 @@ const config: Config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    optimizePackageImports: ['@heroui/react', '@react-aria/utils', 'hugeicons-react'],
+  },
   output: 'standalone',
 }
 

@@ -1,4 +1,5 @@
-import { Button, Divider } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Divider } from '@heroui/divider'
 import { Copy01Icon, PencilEdit02Icon, Unlink01Icon } from 'hugeicons-react'
 
 interface PreviewPanelProps {

@@ -3,7 +3,8 @@
 import type { Locale } from '@i18n/config'
 
 import { CheckIcon, LanguageIcon } from '@heroicons/react/24/outline'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
 import { setLocale } from '@i18n/actions/setLocale'
 import { locales } from '@i18n/config'
 import { useLocale } from 'next-intl'

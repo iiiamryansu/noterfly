@@ -1,7 +1,9 @@
 'use client'
 
-import { ScrollShadow, Skeleton } from '@heroui/react'
-import { BreadcrumbItem, Breadcrumbs, Image } from '@heroui/react'
+import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs'
+import { Image } from '@heroui/image'
+import { ScrollShadow } from '@heroui/scroll-shadow'
+import { Skeleton } from '@heroui/skeleton'
 import { trpc } from '@trpc/c'
 import { debounce } from 'es-toolkit'
 import { Home01Icon, Note01Icon, NotebookIcon } from 'hugeicons-react'

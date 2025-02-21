@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@heroui/react'
+import { Button } from '@heroui/button'
 import { trpc } from '@trpc/c'
 import { Home01Icon, Note01Icon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'

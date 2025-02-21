@@ -1,4 +1,6 @@
-import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Divider } from '@heroui/divider'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
 import { BubbleMenu, type Editor } from '@tiptap/react'
 import { ArrowRight01Icon, Layout2ColumnIcon, LayoutLeftIcon, LayoutRightIcon } from 'hugeicons-react'
 import { type RefObject, useCallback } from 'react'

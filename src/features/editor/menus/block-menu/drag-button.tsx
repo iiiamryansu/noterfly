@@ -2,7 +2,9 @@ import type { Editor } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
 import type { NodeSelection } from '@tiptap/pm/state'
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Input } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
+import { Input } from '@heroui/input'
 import { Comment01Icon, CommentAdd01Icon, Copy01Icon, DragDropVerticalIcon, WasteIcon } from 'hugeicons-react'
 import { useCallback } from 'react'
 

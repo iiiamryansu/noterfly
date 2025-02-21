@@ -1,4 +1,5 @@
-import { Button, Divider } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Divider } from '@heroui/divider'
 import { BubbleMenu, Editor } from '@tiptap/react'
 import { Layout2ColumnIcon, LayoutLeftIcon, LayoutRightIcon, WasteIcon } from 'hugeicons-react'
 import { type RefObject, useCallback } from 'react'

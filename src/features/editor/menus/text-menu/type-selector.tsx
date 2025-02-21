@@ -3,7 +3,8 @@
 import type { Editor } from '@tiptap/react'
 
 import { CheckIcon } from '@heroicons/react/24/outline'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
 import { ArrowDown01Icon } from 'hugeicons-react'
 import Image from 'next/image'
 import { useMemo } from 'react'

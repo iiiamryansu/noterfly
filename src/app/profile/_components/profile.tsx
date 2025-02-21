@@ -2,18 +2,12 @@
 
 import type { ChangeEvent, FormEvent } from 'react'
 
-import {
-  Button,
-  Form,
-  Image,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Form } from '@heroui/form'
+import { Image } from '@heroui/image'
+import { Input } from '@heroui/input'
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/modal'
+import { useDisclosure } from '@heroui/use-disclosure'
 import { trpc } from '@trpc/c'
 import { Camera01Icon } from 'hugeicons-react'
 import { useCallback, useRef, useState } from 'react'

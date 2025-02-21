@@ -2,7 +2,9 @@
 
 import type { Editor } from '@tiptap/react'
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, Input } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
+import { Input } from '@heroui/input'
 import { ArrowDown01Icon, CheckmarkCircle01Icon, Link01Icon } from 'hugeicons-react'
 import { useCallback, useEffect, useState } from 'react'
 

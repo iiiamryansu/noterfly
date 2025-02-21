@@ -1,7 +1,10 @@
 'use client'
 
 import { signOut } from '@auth/c'
-import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger, User } from '@heroui/react'
+import { Avatar } from '@heroui/avatar'
+import { Button } from '@heroui/button'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
+import { User } from '@heroui/user'
 import { ArrowDown01Icon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'

@@ -1,7 +1,7 @@
 'use client'
 
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
-import { Button } from '@heroui/react'
+import { Button } from '@heroui/button'
 import { HelpCircleIcon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'

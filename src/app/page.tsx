@@ -1,7 +1,8 @@
 'use client'
 
 import { CursorArrowRaysIcon } from '@heroicons/react/24/outline'
-import { Button, Chip } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Chip } from '@heroui/chip'
 import { GithubIcon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useTheme } from 'next-themes'

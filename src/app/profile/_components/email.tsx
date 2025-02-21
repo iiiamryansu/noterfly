@@ -1,7 +1,11 @@
 'use client'
 
 import { sendVerificationOtp, verifyEmail } from '@auth/c'
-import { Button, Chip, InputOtp, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Chip } from '@heroui/chip'
+import { InputOtp } from '@heroui/input-otp'
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/modal'
+import { useDisclosure } from '@heroui/use-disclosure'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 

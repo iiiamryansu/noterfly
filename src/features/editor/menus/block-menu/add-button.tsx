@@ -1,7 +1,7 @@
 import type { Editor } from '@tiptap/core'
 import type { Node } from '@tiptap/pm/model'
 
-import { Button } from '@heroui/react'
+import { Button } from '@heroui/button'
 import { Add01Icon } from 'hugeicons-react'
 import { useCallback } from 'react'
 

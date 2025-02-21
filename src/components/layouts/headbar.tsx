@@ -1,6 +1,7 @@
 'use client'
 
-import { Button, ScrollShadow } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { ScrollShadow } from '@heroui/scroll-shadow'
 import {
   Add01Icon,
   Cancel01Icon,

@@ -2,7 +2,9 @@
 
 import { signIn } from '@auth/c'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
-import { Button, Form, Input } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Form } from '@heroui/form'
+import { Input } from '@heroui/input'
 import Link from 'next/link'
 import { type FormEvent, useState } from 'react'
 import { toast } from 'sonner'

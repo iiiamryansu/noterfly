@@ -2,7 +2,11 @@
 
 import type { FormEvent } from 'react'
 
-import { Button, Form, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Form } from '@heroui/form'
+import { Input } from '@heroui/input'
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/modal'
+import { useDisclosure } from '@heroui/use-disclosure'
 import { trpc } from '@trpc/c'
 import { useCallback, useState } from 'react'
 import { toast } from 'sonner'

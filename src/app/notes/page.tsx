@@ -2,21 +2,11 @@
 
 import type { Note } from '@prisma/client'
 
-import {
-  Button,
-  Chip,
-  Divider,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Chip } from '@heroui/chip'
+import { Divider } from '@heroui/divider'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown'
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/table'
 import { trpc } from '@trpc/c'
 import { format, formatDistanceToNow, isThisYear } from 'date-fns'
 import {

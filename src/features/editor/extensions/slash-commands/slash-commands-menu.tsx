@@ -1,6 +1,6 @@
 'use client'
 
-import { Listbox, ListboxItem, ListboxSection } from '@heroui/react'
+import { Listbox, ListboxItem, ListboxSection } from '@heroui/listbox'
 import Image from 'next/image'
 import { forwardRef, type KeyboardEvent, useCallback, useImperativeHandle, useState } from 'react'
 

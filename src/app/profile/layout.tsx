@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { ScrollShadow } from '@heroui/react'
+import { ScrollShadow } from '@heroui/scroll-shadow'
 
 export const metadata: Metadata = {
   title: 'Profile / Noterfly',

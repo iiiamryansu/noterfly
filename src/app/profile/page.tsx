@@ -1,7 +1,8 @@
 'use client'
 
 import { deleteUser } from '@auth/c'
-import { Button, Divider } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Divider } from '@heroui/divider'
 import { delay } from 'es-toolkit'
 import { useRouter } from 'next/navigation'
 import { useCallback, useTransition } from 'react'

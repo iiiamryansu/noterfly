@@ -2,7 +2,8 @@
 
 import type { Editor } from '@tiptap/react'
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/react'
+import { Button } from '@heroui/button'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
 import { ArrowDown01Icon } from 'hugeicons-react'
 
 import { cn } from '~/utils/cn'

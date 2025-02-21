@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@heroui/react'
+import { Button } from '@heroui/button'
 import { Calendar03Icon, CheckmarkSquare01Icon, NoteIcon, Settings01Icon, StarIcon, StickyNote01Icon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { usePathname, useRouter } from 'next/navigation'
