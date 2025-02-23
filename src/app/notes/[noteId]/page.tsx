@@ -33,6 +33,8 @@ export default function NotePage() {
       utils.note.getNote.setData({ noteId: noteId as string }, (prev) => {
         if (prev) return { ...prev, ...data }
       })
+
+      utils.note.getNotes.invalidate()
     },
   })
 

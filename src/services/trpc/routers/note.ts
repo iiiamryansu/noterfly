@@ -84,6 +84,9 @@ export const noteRouter = createTRPCRouter({
   getNotes: authedProcedure.query(async ({ ctx: { userId } }) => {
     try {
       const notes = await prisma.note.findMany({
+        orderBy: {
+          updatedAt: 'desc',
+        },
         where: {
           userId,
         },

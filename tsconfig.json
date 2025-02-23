@@ -25,6 +25,7 @@
       "@i18n/*": ["./src/lib/i18n/*"],
       "@prisma": ["./prisma"],
       "@s3": ["./src/lib/s3"],
+      "@stores/*": ["./src/stores/*"],
       "@trpc/c": ["./src/lib/trpc/client"],
       "@trpc/s": ["./src/lib/trpc/server"],
       "~/*": ["./src/*"]
