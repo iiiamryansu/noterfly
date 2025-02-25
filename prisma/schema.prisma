@@ -25,7 +25,8 @@ model User {
   sessions Session[]
   accounts Account[]
 
-  notes Note[]
+  notes     Note[]
+  notebooks Notebook[]
 
   createdAt DateTime
   updatedAt DateTime
@@ -93,11 +94,35 @@ model Note {
   title   String
   content String
 
+  order Float
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  notebookId String?
+  notebook   Notebook? @relation(fields: [notebookId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("note")
+}
+
+model Notebook {
+  id String @id @default(uuid())
+
+  name        String
+  description String?
+
+  order Float
+
+  notes Note[]
+
   userId String
   user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("note")
+  @@map("notebook")
 }

@@ -1,5 +1,6 @@
 import { createCallerFactory, createTRPCRouter } from '~/services/trpc'
 import { noteRouter } from '~/services/trpc/routers/note'
+import { notebookRouter } from '~/services/trpc/routers/notebook'
 import { postRouter } from '~/services/trpc/routers/post'
 import { resendRouter } from '~/services/trpc/routers/resend'
 import { s3Router } from '~/services/trpc/routers/s3'
@@ -12,6 +13,7 @@ import { userRouter } from '~/services/trpc/routers/user'
  */
 export const appRouter = createTRPCRouter({
   note: noteRouter,
+  notebook: notebookRouter,
   post: postRouter,
   resend: resendRouter,
   s3: s3Router,

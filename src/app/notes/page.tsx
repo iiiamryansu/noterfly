@@ -1,9 +1,11 @@
 'use client'
 
+import type { NoteWithNotebook } from '@stores/note/types'
+
 import { Button } from '@heroui/button'
 import { Divider } from '@heroui/divider'
 import { ScrollShadow } from '@heroui/scroll-shadow'
-import { useNoteStore } from '@stores/note-store'
+import { useNoteStore } from '@stores/note'
 import { trpc } from '@trpc/c'
 import {
   DashboardSquare01Icon,
@@ -31,7 +33,7 @@ export default function NotesPage() {
   }, [isLoadingNotes, setIsLoadingNotes])
 
   useEffect(() => {
-    if (!isLoadingNotes && notes) setNotes(notes)
+    if (!isLoadingNotes && notes) setNotes(notes as NoteWithNotebook[])
   }, [isLoadingNotes, notes, setNotes])
 
   return (

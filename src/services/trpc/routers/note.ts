@@ -18,6 +18,7 @@ export const noteRouter = createTRPCRouter({
           data: {
             content: `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Hello, world! 🌏"}]}]}`,
             id: noteId,
+            order: Date.now() / 1e6,
             title: 'New Note',
             userId,
           },
@@ -84,8 +85,16 @@ export const noteRouter = createTRPCRouter({
   getNotes: authedProcedure.query(async ({ ctx: { userId } }) => {
     try {
       const notes = await prisma.note.findMany({
+        include: {
+          notebook: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
         orderBy: {
-          updatedAt: 'desc',
+          order: 'desc',
         },
         where: {
           userId,
@@ -101,6 +110,63 @@ export const noteRouter = createTRPCRouter({
       })
     }
   }),
+
+  moveToNotebook: authedProcedure
+    .input(
+      z.object({
+        notebookId: z.string().optional(),
+        noteId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx: { userId }, input: { notebookId, noteId } }) => {
+      try {
+        await prisma.note.update({
+          data: {
+            notebookId: notebookId === 'unsorted' ? null : notebookId,
+            order: Date.now() / 1e6,
+          },
+          where: {
+            id: noteId,
+            userId,
+          },
+        })
+      } catch (error: unknown) {
+        throw new TRPCError({
+          cause: error,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to move to notebook.',
+        })
+      }
+    }),
+
+  reorderNote: authedProcedure
+    .input(
+      z.object({
+        newOrder: z.number(),
+        noteId: z.string(),
+        targetNotebookId: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx: { userId }, input: { newOrder, noteId, targetNotebookId } }) => {
+      try {
+        await prisma.note.update({
+          data: {
+            order: newOrder,
+            ...(targetNotebookId && { notebookId: targetNotebookId }),
+          },
+          where: {
+            id: noteId,
+            userId,
+          },
+        })
+      } catch (error: unknown) {
+        throw new TRPCError({
+          cause: error,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to reorder note.',
+        })
+      }
+    }),
 
   updateNote: authedProcedure
     .input(

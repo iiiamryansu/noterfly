@@ -1,6 +1,7 @@
 'use client'
 
 import { HeroUIProvider } from '@heroui/system'
+import { useNotebookStore } from '@stores/notebook'
 import { trpc } from '@trpc/c'
 import { ThemeProvider } from 'next-themes'
 import { useRouter } from 'next/navigation'
@@ -23,11 +24,23 @@ export default function ClientProvider({ children }: ClientProviderProps) {
 
   const setCurrentUser = useUserStore((state) => state.setCurrentUser)
 
+  const { setIsLoadingNotebooks, setNotebooks } = useNotebookStore()
+
   const { data: user } = trpc.user.getUser.useQuery()
+  const { data: notebooks, isLoading: isLoadingNotebooks } = trpc.notebook.getNotebooks.useQuery()
 
   useEffect(() => {
     if (user) setCurrentUser(user)
   }, [user, setCurrentUser])
+
+  useEffect(() => {
+    if (isLoadingNotebooks) setIsLoadingNotebooks(true)
+    else setIsLoadingNotebooks(false)
+  }, [isLoadingNotebooks, setIsLoadingNotebooks])
+
+  useEffect(() => {
+    if (notebooks && !isLoadingNotebooks) setNotebooks(notebooks)
+  }, [notebooks, isLoadingNotebooks, setNotebooks])
 
   /* ------------------------------ 避免水合阶段的不匹配问题 ------------------------------ */
 
