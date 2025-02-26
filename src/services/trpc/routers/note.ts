@@ -301,6 +301,52 @@ export const noteRouter = createTRPCRouter({
       }
     }),
 
+  searchNotes: authedProcedure
+    .input(
+      z.object({
+        query: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ ctx: { userId }, input: { query } }) => {
+      try {
+        const notes = await prisma.note.findMany({
+          orderBy: {
+            title: 'asc',
+          },
+          select: {
+            id: true,
+            title: true,
+          },
+          where: {
+            isDeleted: false,
+            OR: [
+              {
+                title: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
+              },
+              {
+                content: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
+              },
+            ],
+            userId,
+          },
+        })
+
+        return notes
+      } catch (error: unknown) {
+        throw new TRPCError({
+          cause: error,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to search notes.',
+        })
+      }
+    }),
+
   updateNote: authedProcedure
     .input(
       z.object({

@@ -5,7 +5,8 @@ import { Avatar } from '@heroui/avatar'
 import { Button } from '@heroui/button'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
 import { User } from '@heroui/user'
-import { ArrowDown01Icon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } from 'hugeicons-react'
+import { useSystemStore } from '@stores/system'
+import { ArrowDown01Icon, LinkBackwardIcon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
@@ -13,6 +14,8 @@ import { useUserStore } from '~/stores/user-store'
 
 export default function UserPanel() {
   const currentUser = useUserStore((state) => state.currentUser)
+
+  const { setSidebarMode, sidebarMode } = useSystemStore()
 
   const router = useRouter()
 
@@ -98,8 +101,14 @@ export default function UserPanel() {
       </Dropdown>
 
       {/* Search */}
-      <Button className="text-default-500" isIconOnly size="sm" variant="light">
-        <Search01Icon className="size-4" />
+      <Button
+        className="text-default-500"
+        isIconOnly
+        onPress={() => setSidebarMode(sidebarMode === 'normal' ? 'search' : 'normal')}
+        size="sm"
+        variant={sidebarMode === 'search' ? 'solid' : 'light'}
+      >
+        {sidebarMode === 'normal' ? <Search01Icon className="size-4" /> : <LinkBackwardIcon className="size-4" />}
       </Button>
     </section>
   )

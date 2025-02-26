@@ -54,7 +54,7 @@ export default function NotebookPanel() {
   /* ----------------------------------------------------------------------------- */
 
   return (
-    <section className="flex flex-col overflow-y-auto pt-2">
+    <section className="flex h-[calc(100vh-470px)] flex-col overflow-y-auto pt-2">
       <header className="flex items-center justify-between pl-2">
         <span className="block select-none text-xs font-semibold text-default-500">Notebooks</span>
         <Button className="text-default-500" isIconOnly onPress={openModal} size="sm" variant="light">
