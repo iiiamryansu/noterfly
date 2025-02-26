@@ -8,13 +8,13 @@ import { Image } from '@heroui/image'
 import { Input } from '@heroui/input'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/modal'
 import { useDisclosure } from '@heroui/use-disclosure'
+import { useUserStore } from '@stores/user'
 import { trpc } from '@trpc/c'
 import { Camera01Icon } from 'hugeicons-react'
 import { useCallback, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { UpdateProfileSchema } from '~/services/trpc/schemas/user'
-import { useUserStore } from '~/stores/user-store'
 import { compressImage } from '~/utils/compress-image'
 
 export function Profile() {

@@ -3,7 +3,7 @@
 import { Divider } from '@heroui/divider'
 import { Tab, Tabs } from '@heroui/tabs'
 import { useSystemStore } from '@stores/system'
-import { useUserStore } from '@stores/user-store'
+import { useUserStore } from '@stores/user'
 
 import ControlPanel from '~/components/panels/control-panel'
 import LogoPanel from '~/components/panels/logo-panel'

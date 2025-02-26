@@ -6,11 +6,10 @@ import { Button } from '@heroui/button'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
 import { User } from '@heroui/user'
 import { useSystemStore } from '@stores/system'
+import { useUserStore } from '@stores/user'
 import { ArrowDown01Icon, LinkBackwardIcon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-
-import { useUserStore } from '~/stores/user-store'
 
 export default function UserPanel() {
   const currentUser = useUserStore((state) => state.currentUser)

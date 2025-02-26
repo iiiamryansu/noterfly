@@ -2,7 +2,7 @@
 
 import { Button } from '@heroui/button'
 import { useDisclosure } from '@heroui/modal'
-import { useUserStore } from '@stores/user-store'
+import { useUserStore } from '@stores/user'
 import { trpc } from '@trpc/c'
 import { Home01Icon, Note01Icon, WasteIcon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'

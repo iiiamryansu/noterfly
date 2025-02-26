@@ -2,12 +2,11 @@
 
 import { HeroUIProvider } from '@heroui/system'
 import { useNotebookStore } from '@stores/notebook'
+import { useUserStore } from '@stores/user'
 import { trpc } from '@trpc/c'
 import { ThemeProvider } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-
-import { useUserStore } from '~/stores/user-store'
 
 declare module '@react-types/shared' {
   interface RouterConfig {

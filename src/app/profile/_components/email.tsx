@@ -6,10 +6,9 @@ import { Chip } from '@heroui/chip'
 import { InputOtp } from '@heroui/input-otp'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/modal'
 import { useDisclosure } from '@heroui/use-disclosure'
+import { useUserStore } from '@stores/user'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-
-import { useUserStore } from '~/stores/user-store'
 
 export function Email() {
   const inputOtpRef = useRef<HTMLInputElement>(null)
