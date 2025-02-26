@@ -20,7 +20,7 @@ export default function MenuPanel() {
 
   const { mutate: createNote } = trpc.note.createNote.useMutation({
     onMutate: ({ noteId }) => {
-      router.push(`/note/${noteId}`)
+      router.push(`/notes/${noteId}`)
     },
     onSuccess: () => {
       utils.note.getNote.invalidate()

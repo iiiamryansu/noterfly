@@ -57,16 +57,18 @@ export function NotebookItem({ isOverlay, notebook }: NotebookItemProps) {
         size="sm"
         startContent={
           notebook.isExpanded ? (
-            <ArrowDown01Icon className="size-3 text-default-500" />
+            <ArrowDown01Icon className="size-3 shrink-0 text-default-500" />
           ) : (
-            <ArrowRight01Icon className="size-3 text-default-500" />
+            <ArrowRight01Icon className="size-3 shrink-0 text-default-500" />
           )
         }
         variant="light"
         {...attributes}
         {...listeners}
       >
-        {notebook.name}
+        <span className="truncate" style={{ direction: 'ltr' }}>
+          {notebook.name}
+        </span>
       </Button>
 
       {notebook.isExpanded && (

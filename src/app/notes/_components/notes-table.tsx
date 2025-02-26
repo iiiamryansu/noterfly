@@ -167,9 +167,12 @@ export function NotesTable() {
         case 'title': {
           return (
             <header className="flex flex-col">
-              <h2 className="line-clamp-1 flex select-none items-center gap-1.5 text-sm text-primary-900">
+              <h2 className="flex select-none items-center gap-1.5 text-sm text-primary-900">
                 {note.isStarred && <StarIcon className="size-3 shrink-0 text-yellow-500" fill="currentColor" />}
-                {note.title}
+
+                <span className="truncate" style={{ direction: 'ltr' }}>
+                  {note.title}
+                </span>
               </h2>
 
               <section className="flex items-center gap-1.5 text-default-400">

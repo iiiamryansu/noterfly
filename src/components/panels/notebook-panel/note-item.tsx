@@ -50,7 +50,9 @@ export function NoteItem({ isOverlay, note }: NoteItemProps) {
       {...attributes}
       {...listeners}
     >
-      {note.title}
+      <span className="truncate" style={{ direction: 'ltr' }}>
+        {note.title}
+      </span>
     </Button>
   )
 }
