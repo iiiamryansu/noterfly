@@ -51,6 +51,9 @@ export function NotesTable() {
   const { mutate: deleteNote } = trpc.note.deleteNote.useMutation({
     onSuccess: () => {
       utils.note.getNotes.refetch()
+
+      utils.notebook.getNotebooks.invalidate()
+      utils.note.getDeletedNotes.invalidate()
     },
   })
 
@@ -109,7 +112,7 @@ export function NotesTable() {
                   color="danger"
                   endContent={<Delete01Icon className="size-4" />}
                   key="delete"
-                  onPress={() => deleteNote({ noteId: note.id })}
+                  onPress={() => deleteNote({ noteId: note.id, type: 'single' })}
                 >
                   Delete
                 </DropdownItem>

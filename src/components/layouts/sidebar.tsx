@@ -14,7 +14,7 @@ export default function Sidebar() {
   const currentUser = useUserStore((state) => state.currentUser)
 
   return (
-    <aside className="grid h-full w-full flex-none grid-cols-1 grid-rows-[48px_68px_17px_40px_212px_1fr_1px_48px] pl-2">
+    <aside className="grid h-full w-full flex-none grid-cols-1 grid-rows-[48px_104px_17px_40px_212px_1fr_1px_48px] pl-2">
       <LogoPanel />
       <MenuPanel />
       <Divider className="my-2" />

@@ -1,11 +1,15 @@
 'use client'
 
 import { Button } from '@heroui/button'
+import { useDisclosure } from '@heroui/modal'
+import { useUserStore } from '@stores/user-store'
 import { trpc } from '@trpc/c'
-import { Home01Icon, Note01Icon } from 'hugeicons-react'
+import { Home01Icon, Note01Icon, WasteIcon } from 'hugeicons-react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { v4 as uuid } from 'uuid'
+
+import { RecentlyDeletedModal } from '~/components/modals/recently-deleted-modal'
 
 export default function MenuPanel() {
   const utils = trpc.useUtils()
@@ -23,6 +27,14 @@ export default function MenuPanel() {
       utils.note.getNotes.invalidate()
     },
   })
+
+  /* ------------------------- Recently Deleted Modal ------------------------- */
+
+  const currentUser = useUserStore((state) => state.currentUser)
+
+  const { isOpen: isModalOpen, onOpen: openModal, onOpenChange: toggleModalState } = useDisclosure()
+
+  /* ----------------------------------------------------------------------------- */
 
   return (
     <section className="flex flex-col gap-1">
@@ -44,6 +56,21 @@ export default function MenuPanel() {
       >
         {t('new-note')}
       </Button>
+
+      {currentUser && (
+        <>
+          <Button
+            className="justify-start"
+            onPress={openModal}
+            size="sm"
+            startContent={<WasteIcon className="size-4" />}
+            variant="light"
+          >
+            Recently Deleted
+          </Button>
+          <RecentlyDeletedModal isOpen={isModalOpen} onOpenChange={toggleModalState} />
+        </>
+      )}
     </section>
   )
 }

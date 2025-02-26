@@ -36,18 +36,72 @@ export const noteRouter = createTRPCRouter({
 
   deleteNote: authedProcedure
     .input(
-      z.object({
-        noteId: z.string(),
-      }),
+      z.discriminatedUnion('type', [
+        z.object({
+          isPermanent: z.boolean().optional(),
+          noteId: z.string(),
+          type: z.literal('single'),
+        }),
+        z.object({
+          isPermanent: z.boolean().optional(),
+          noteIds: z.array(z.string()).min(1),
+          type: z.literal('multiple'),
+        }),
+      ]),
     )
-    .mutation(async ({ ctx: { userId }, input: { noteId } }) => {
+    .mutation(async ({ ctx: { userId }, input }) => {
+      const { isPermanent, type } = input
+
       try {
-        await prisma.note.delete({
-          where: {
-            id: noteId,
-            userId,
-          },
-        })
+        if (type === 'single') {
+          // 处理单个 Note 的删除
+          if (isPermanent) {
+            await prisma.note.delete({
+              where: {
+                id: input.noteId,
+                userId,
+              },
+            })
+          } else {
+            await prisma.note.update({
+              data: {
+                isDeleted: true,
+                notebookId: null,
+                order: Date.now() / 1e6,
+              },
+              where: {
+                id: input.noteId,
+                userId,
+              },
+            })
+          }
+        } else {
+          // 处理多个 Note 的删除
+          if (isPermanent) {
+            await prisma.note.deleteMany({
+              where: {
+                id: {
+                  in: input.noteIds,
+                },
+                userId,
+              },
+            })
+          } else {
+            await prisma.note.updateMany({
+              data: {
+                isDeleted: true,
+                notebookId: null,
+                order: Date.now() / 1e6,
+              },
+              where: {
+                id: {
+                  in: input.noteIds,
+                },
+                userId,
+              },
+            })
+          }
+        }
       } catch (error: unknown) {
         throw new TRPCError({
           cause: error,
@@ -56,6 +110,28 @@ export const noteRouter = createTRPCRouter({
         })
       }
     }),
+
+  getDeletedNotes: authedProcedure.query(async ({ ctx: { userId } }) => {
+    try {
+      const notes = await prisma.note.findMany({
+        orderBy: {
+          order: 'desc',
+        },
+        where: {
+          isDeleted: true,
+          userId,
+        },
+      })
+
+      return notes
+    } catch (error: unknown) {
+      throw new TRPCError({
+        cause: error,
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to get deleted notes.',
+      })
+    }
+  }),
 
   getNote: authedProcedure
     .input(
@@ -68,6 +144,7 @@ export const noteRouter = createTRPCRouter({
         const note = await prisma.note.findUnique({
           where: {
             id: noteId,
+            isDeleted: false,
             userId,
           },
         })
@@ -97,6 +174,7 @@ export const noteRouter = createTRPCRouter({
           order: 'desc',
         },
         where: {
+          isDeleted: false,
           userId,
         },
       })
@@ -164,6 +242,61 @@ export const noteRouter = createTRPCRouter({
           cause: error,
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to reorder note.',
+        })
+      }
+    }),
+
+  restoreNote: authedProcedure
+    .input(
+      z.discriminatedUnion('type', [
+        z.object({
+          noteId: z.string(),
+          type: z.literal('single'),
+        }),
+        z.object({
+          noteIds: z.array(z.string()).min(1),
+          type: z.literal('multiple'),
+        }),
+      ]),
+    )
+    .mutation(async ({ ctx: { userId }, input }) => {
+      const { type } = input
+
+      try {
+        if (type === 'single') {
+          // 处理单个 Note 的恢复
+          await prisma.note.update({
+            data: {
+              isDeleted: false,
+              notebookId: null,
+              order: Date.now() / 1e6,
+            },
+            where: {
+              id: input.noteId,
+              userId,
+            },
+          })
+        } else {
+          // 处理多个 Note 的恢复
+          await prisma.note.updateMany({
+            data: {
+              isDeleted: false,
+              notebookId: null,
+              order: Date.now() / 1e6,
+            },
+            where: {
+              id: {
+                in: input.noteIds,
+              },
+              userId,
+            },
+          })
+        }
+      } catch (error: unknown) {
+        throw new TRPCError({
+          cause: error,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to restore note.',
         })
       }
     }),

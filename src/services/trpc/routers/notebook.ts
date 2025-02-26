@@ -44,6 +44,9 @@ export const notebookRouter = createTRPCRouter({
                 order: true,
                 title: true,
               },
+              where: {
+                isDeleted: false,
+              },
             },
           },
           orderBy: {
