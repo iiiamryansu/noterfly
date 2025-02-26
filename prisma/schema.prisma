@@ -96,6 +96,7 @@ model Note {
 
   order Float
 
+  isStarred Boolean @default(false)
   isDeleted Boolean @default(false)
 
   userId String

@@ -12,9 +12,11 @@ import { useNoteStore } from '@stores/note'
 import { useNotebookStore } from '@stores/notebook'
 import { trpc } from '@trpc/c'
 import { format, formatDistanceToNow, isThisYear } from 'date-fns'
-import { Delete01Icon, MoreHorizontalIcon, Notebook01Icon, NotebookIcon } from 'hugeicons-react'
+import { Delete01Icon, MoreHorizontalIcon, Notebook01Icon, NotebookIcon, StarIcon } from 'hugeicons-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
+
+import { cn } from '~/utils/cn'
 
 const columns = [
   {
@@ -57,6 +59,14 @@ export function NotesTable() {
     },
   })
 
+  /* ---------------------------------- Star ---------------------------------- */
+  const { mutate: updateNote } = trpc.note.updateNote.useMutation({
+    onSuccess: (note) => {
+      utils.note.getNotes.invalidate()
+      utils.note.getNote.invalidate({ noteId: note.id })
+    },
+  })
+
   /* ---------------------------- move-to-notebook ---------------------------- */
 
   const { isOpen: isModalOpen, onOpen: openModal, onOpenChange: toggleModalState } = useDisclosure()
@@ -94,6 +104,14 @@ export function NotesTable() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
+                <DropdownItem
+                  endContent={<StarIcon className={cn('size-4', note.isStarred && 'text-yellow-500')} />}
+                  key="star"
+                  onPress={() => updateNote({ data: { isStarred: !note.isStarred }, noteId: note.id })}
+                  textValue={note.isStarred ? 'Unstar' : 'Star'}
+                >
+                  {note.isStarred ? 'Unstar' : 'Star'}
+                </DropdownItem>
                 <DropdownItem
                   endContent={<Notebook01Icon className="size-4" />}
                   key="move-to-notebook"
@@ -149,7 +167,10 @@ export function NotesTable() {
         case 'title': {
           return (
             <header className="flex flex-col">
-              <h2 className="line-clamp-1 select-none text-sm text-primary-900">{note.title}</h2>
+              <h2 className="line-clamp-1 flex select-none items-center gap-1.5 text-sm text-primary-900">
+                {note.isStarred && <StarIcon className="size-3 shrink-0 text-yellow-500" fill="currentColor" />}
+                {note.title}
+              </h2>
 
               <section className="flex items-center gap-1.5 text-default-400">
                 <NotebookIcon className="size-3 shrink-0" strokeWidth={1} />
@@ -193,7 +214,7 @@ export function NotesTable() {
         }
       }
     },
-    [openModal, deleteNote],
+    [openModal, updateNote, deleteNote],
   )
 
   return (

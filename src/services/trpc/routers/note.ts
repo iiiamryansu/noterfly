@@ -306,6 +306,7 @@ export const noteRouter = createTRPCRouter({
       z.object({
         data: z.object({
           content: z.string().optional(),
+          isStarred: z.boolean().optional(),
           title: z.string().optional(),
         }),
         noteId: z.string(),
@@ -317,6 +318,7 @@ export const noteRouter = createTRPCRouter({
           data,
           select: {
             content: true,
+            id: true,
             title: true,
           },
           where: {
