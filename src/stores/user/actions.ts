@@ -8,6 +8,8 @@ const userActions: StateCreator<UserStore, [], [], UserActions> = (set, get) => 
 
   setCurrentUser: (user) => set({ currentUser: user }),
 
+  setIsAuthed: (isAuthed) => set({ isAuthed }),
+
   updateCurrentUser: (user) => {
     const currentUser = get().currentUser
 

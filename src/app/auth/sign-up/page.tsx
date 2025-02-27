@@ -5,12 +5,12 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { Button } from '@heroui/button'
 import { Form } from '@heroui/form'
 import { Input } from '@heroui/input'
+import { useUserStore } from '@stores/user'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { type FormEvent, useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
-
 const signUpFormSchema = z.object({
   email: z.string().min(1, 'Email is required').email('Please enter a valid email'),
   password: z
@@ -32,6 +32,8 @@ export default function SignUpPage() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [formErrors, setFormErrors] = useState<Record<string, string[]>>({})
+
+  const setIsAuthed = useUserStore((state) => state.setIsAuthed)
 
   const router = useRouter()
 
@@ -60,6 +62,8 @@ export default function SignUpPage() {
             setIsSubmitting(false)
           },
           onSuccess: () => {
+            setIsAuthed(true)
+
             router.push('/home')
           },
         },

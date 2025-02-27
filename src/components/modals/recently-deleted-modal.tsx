@@ -2,10 +2,10 @@
 
 import { Button } from '@heroui/button'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/modal'
+import { useUserStore } from '@stores/user'
 import { trpc } from '@trpc/c'
 import { Loading03Icon, Note01Icon } from 'hugeicons-react'
 import { useState } from 'react'
-
 interface RecentlyDeletedModalProps {
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
@@ -14,9 +14,13 @@ interface RecentlyDeletedModalProps {
 export function RecentlyDeletedModal({ isOpen, onOpenChange }: RecentlyDeletedModalProps) {
   const [selectedNoteIds, setSelectedNoteIds] = useState<string[]>([])
 
+  const isAuthed = useUserStore((state) => state.isAuthed)
+
   const utils = trpc.useUtils()
 
-  const { data: deletedNotes, isFetching: isLoadingDeletedNotes } = trpc.note.getDeletedNotes.useQuery()
+  const { data: deletedNotes, isFetching: isLoadingDeletedNotes } = trpc.note.getDeletedNotes.useQuery(undefined, {
+    enabled: !!isAuthed,
+  })
 
   const { isPending: isRestoringNote, mutate: restoreNote } = trpc.note.restoreNote.useMutation({
     onSuccess: () => {

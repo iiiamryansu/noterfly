@@ -21,16 +21,20 @@ interface ClientProviderProps {
 export default function ClientProvider({ children }: ClientProviderProps) {
   const router = useRouter()
 
-  const setCurrentUser = useUserStore((state) => state.setCurrentUser)
+  const { isAuthed, setCurrentUser } = useUserStore()
 
   const { setIsLoadingNotebooks, setNotebooks } = useNotebookStore()
 
-  const { data: user } = trpc.user.getUser.useQuery()
-  const { data: notebooks, isLoading: isLoadingNotebooks } = trpc.notebook.getNotebooks.useQuery()
+  const { data: user, isFetching: isLoadingUser } = trpc.user.getUser.useQuery(undefined, {
+    enabled: !!isAuthed,
+  })
+  const { data: notebooks, isFetching: isLoadingNotebooks } = trpc.notebook.getNotebooks.useQuery(undefined, {
+    enabled: !!isAuthed,
+  })
 
   useEffect(() => {
-    if (user) setCurrentUser(user)
-  }, [user, setCurrentUser])
+    if (!isLoadingUser && user) setCurrentUser(user)
+  }, [isLoadingUser, user, setCurrentUser])
 
   useEffect(() => {
     if (isLoadingNotebooks) setIsLoadingNotebooks(true)
@@ -38,8 +42,8 @@ export default function ClientProvider({ children }: ClientProviderProps) {
   }, [isLoadingNotebooks, setIsLoadingNotebooks])
 
   useEffect(() => {
-    if (notebooks && !isLoadingNotebooks) setNotebooks(notebooks)
-  }, [notebooks, isLoadingNotebooks, setNotebooks])
+    if (!isLoadingNotebooks && notebooks) setNotebooks(notebooks)
+  }, [isLoadingNotebooks, notebooks, setNotebooks])
 
   /* ------------------------------ 避免水合阶段的不匹配问题 ------------------------------ */
 

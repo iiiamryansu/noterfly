@@ -5,6 +5,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { Button } from '@heroui/button'
 import { Form } from '@heroui/form'
 import { Input } from '@heroui/input'
+import { useUserStore } from '@stores/user'
 import Link from 'next/link'
 import { type FormEvent, useState } from 'react'
 import { toast } from 'sonner'
@@ -19,6 +20,8 @@ export default function SignUpPage() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [formErrors, setFormErrors] = useState<Record<string, string[]>>({})
+
+  const setIsAuthed = useUserStore((state) => state.setIsAuthed)
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -45,6 +48,7 @@ export default function SignUpPage() {
           onResponse: () => {
             setIsSubmitting(false)
           },
+          onSuccess: () => setIsAuthed(true),
         },
         password,
       })
