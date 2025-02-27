@@ -1,8 +1,4 @@
-FROM node:20 AS base
-
-# Install Bun
-
-RUN npm install -g bun
+FROM oven/bun:1.2.2-alpine AS base
 
 ##### DEPENDENCIES #####
 
