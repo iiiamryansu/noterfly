@@ -5,9 +5,8 @@ import type { Note } from '@prisma/client'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Button } from '@heroui/button'
+import { cn } from '@utils/cn'
 import { usePathname, useRouter } from 'next/navigation'
-
-import { cn } from '~/utils/cn'
 
 interface NoteItemProps {
   isOverlay?: boolean

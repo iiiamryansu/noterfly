@@ -1,9 +1,8 @@
 'use client'
 
+import { cn } from '@utils/cn'
 import { motion, Variants } from 'framer-motion'
 import { useEffect, useState } from 'react'
-
-import { cn } from '~/utils/cn'
 
 interface TypewriterProps {
   className?: string

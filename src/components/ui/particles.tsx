@@ -1,8 +1,7 @@
 'use client'
 
+import { cn } from '@utils/cn'
 import React, { useEffect, useRef, useState } from 'react'
-
-import { cn } from '~/utils/cn'
 
 interface MousePosition {
   x: number

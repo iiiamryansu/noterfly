@@ -1,9 +1,8 @@
 import type { Node } from '@tiptap/pm/model'
 
 import { type Editor, NodeViewWrapper } from '@tiptap/react'
+import { cn } from '@utils/cn'
 import { useCallback } from 'react'
-
-import { cn } from '~/utils/cn'
 
 interface ImageBlockProps {
   editor: Editor

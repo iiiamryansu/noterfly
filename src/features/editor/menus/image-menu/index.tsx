@@ -2,12 +2,11 @@ import { Button } from '@heroui/button'
 import { Divider } from '@heroui/divider'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
 import { BubbleMenu, type Editor } from '@tiptap/react'
+import { cn } from '@utils/cn'
 import { ArrowRight01Icon, Layout2ColumnIcon, LayoutLeftIcon, LayoutRightIcon } from 'hugeicons-react'
 import { type RefObject, useCallback } from 'react'
 import { sticky } from 'tippy.js'
 import { v4 as uuid } from 'uuid'
-
-import { cn } from '~/utils/cn'
 
 export default function ImageMenu({ appendTo, editor }: { appendTo: RefObject<HTMLDivElement>; editor: Editor | null }) {
   const shouldShow = useCallback(() => {

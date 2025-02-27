@@ -1,6 +1,7 @@
 import { Button } from '@heroui/button'
 import { Divider } from '@heroui/divider'
 import { BubbleMenu, Editor } from '@tiptap/react'
+import { cn } from '@utils/cn'
 import { Layout2ColumnIcon, LayoutLeftIcon, LayoutRightIcon, WasteIcon } from 'hugeicons-react'
 import { type RefObject, useCallback } from 'react'
 import { sticky } from 'tippy.js'
@@ -8,7 +9,6 @@ import { v4 as uuid } from 'uuid'
 
 import { ColumnLayout } from '~/features/editor/extensions/columns'
 import { getRenderContainer } from '~/features/editor/utils'
-import { cn } from '~/utils/cn'
 
 export default function ColumnsMenu({ appendTo, editor }: { appendTo: RefObject<HTMLDivElement>; editor: Editor | null }) {
   const getReferenceClientRect = useCallback(() => {

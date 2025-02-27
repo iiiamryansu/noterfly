@@ -28,6 +28,7 @@
       "@stores/*": ["./src/stores/*"],
       "@trpc/c": ["./src/lib/trpc/client"],
       "@trpc/s": ["./src/lib/trpc/server"],
+      "@utils/*": ["./src/utils/*"],
       "~/*": ["./src/*"]
     }
   },

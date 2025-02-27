@@ -10,12 +10,12 @@ import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@herou
 import { useDisclosure } from '@heroui/use-disclosure'
 import { useUserStore } from '@stores/user'
 import { trpc } from '@trpc/c'
+import { compressImage } from '@utils/compress-image'
 import { Camera01Icon } from 'hugeicons-react'
 import { useCallback, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { UpdateProfileSchema } from '~/services/trpc/schemas/user'
-import { compressImage } from '~/utils/compress-image'
 
 export function Profile() {
   const { isOpen, onOpen: openModal, onOpenChange: toggleModalState } = useDisclosure()

@@ -2,6 +2,7 @@
 
 import { Button } from '@heroui/button'
 import { ScrollShadow } from '@heroui/scroll-shadow'
+import { cn } from '@utils/cn'
 import {
   Add01Icon,
   Cancel01Icon,
@@ -14,8 +15,6 @@ import {
   StarIcon,
 } from 'hugeicons-react'
 import { usePathname, useRouter } from 'next/navigation'
-
-import { cn } from '~/utils/cn'
 
 let notes = [
   {

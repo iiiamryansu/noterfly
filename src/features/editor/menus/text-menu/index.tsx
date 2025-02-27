@@ -3,6 +3,7 @@
 import { Button } from '@heroui/button'
 import { Divider } from '@heroui/divider'
 import { BubbleMenu, Editor } from '@tiptap/react'
+import { cn } from '@utils/cn'
 import {
   SourceCodeIcon,
   TextAlignCenterIcon,
@@ -18,7 +19,6 @@ import {
 import { useCallback } from 'react'
 
 import { hasSelectedText } from '~/features/editor/utils'
-import { cn } from '~/utils/cn'
 
 import ColorSelector from './color-selector'
 import LinkEditor from './link-editor'

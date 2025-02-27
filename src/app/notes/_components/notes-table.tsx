@@ -11,12 +11,11 @@ import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from 
 import { useNoteStore } from '@stores/note'
 import { useNotebookStore } from '@stores/notebook'
 import { trpc } from '@trpc/c'
+import { cn } from '@utils/cn'
 import { format, formatDistanceToNow, isThisYear } from 'date-fns'
 import { Delete01Icon, MoreHorizontalIcon, Notebook01Icon, NotebookIcon, StarIcon } from 'hugeicons-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
-
-import { cn } from '~/utils/cn'
 
 const columns = [
   {

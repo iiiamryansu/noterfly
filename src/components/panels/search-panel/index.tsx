@@ -6,12 +6,11 @@ import { Button } from '@heroui/button'
 import { Input } from '@heroui/input'
 import { ScrollShadow } from '@heroui/scroll-shadow'
 import { trpc } from '@trpc/c'
+import { cn } from '@utils/cn'
 import { debounce } from 'es-toolkit'
 import { Loading03Icon, Note01Icon, Search01Icon } from 'hugeicons-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
-
-import { cn } from '~/utils/cn'
 
 export default function SearchPanel() {
   const pathname = usePathname()

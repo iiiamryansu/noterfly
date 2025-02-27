@@ -16,6 +16,8 @@ const options = {
  * @param {number} [maxWidthOrHeight=1200] - 最大宽度或高度, 保持原始宽高比
  * @returns {Promise<File>} 压缩后的图片文件
  */
-export async function compressImage(image: File, maxWidthOrHeight = 1200): Promise<File> {
+async function compressImage(image: File, maxWidthOrHeight = 1200): Promise<File> {
   return new File([await imageCompression(image, { ...options, maxWidthOrHeight })], image.name)
 }
+
+export { compressImage }
