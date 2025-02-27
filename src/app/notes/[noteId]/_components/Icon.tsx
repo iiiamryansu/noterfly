@@ -2,7 +2,6 @@
 
 import type { Note } from '@prisma/client'
 
-import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { Button } from '@heroui/button'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown'
@@ -88,7 +87,7 @@ export function Icon({ note }: IconProps) {
           >
             <Picker
               autoFocus
-              data={data}
+              data={async () => (await fetch('https://cdn.jsdelivr.net/npm/@emoji-mart/data')).json()}
               emojiButtonRadius="8px"
               locale={locale}
               onEmojiSelect={(emoji: { native: string }) => updateNote({ data: { icon: emoji.native }, noteId: note.id })}
