@@ -1,4 +1,8 @@
-FROM oven/bun:1 AS base
+FROM node:20 AS base
+
+# Install Bun
+
+RUN npm install -g bun
 
 ##### DEPENDENCIES #####
 
