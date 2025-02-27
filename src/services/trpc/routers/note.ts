@@ -352,6 +352,7 @@ export const noteRouter = createTRPCRouter({
       z.object({
         data: z.object({
           content: z.string().optional(),
+          icon: z.string().optional(),
           isStarred: z.boolean().optional(),
           title: z.string().optional(),
         }),

@@ -91,6 +91,7 @@ model Verification {
 model Note {
   id String @id @default(uuid())
 
+  icon    String @default("")
   title   String
   content String
 

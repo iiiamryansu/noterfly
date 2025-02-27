@@ -43,7 +43,7 @@ export function NotebookList() {
   const notebookIds = useMemo(() => notebooks.map((notebook) => notebook.id), [notebooks])
 
   const [activeNotebook, setActiveNotebook] = useState<NotebookWithNotesAndIsExpanded | null>(null)
-  const [activeNote, setActiveNote] = useState<null | Pick<Note, 'id' | 'order' | 'title'>>(null)
+  const [activeNote, setActiveNote] = useState<null | Pick<Note, 'icon' | 'id' | 'order' | 'title'>>(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

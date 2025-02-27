@@ -14,7 +14,7 @@ type NotebookStates = {
 
 type NotebookStore = NotebookActions & NotebookStates
 
-type NotebookWithNotes = Notebook & { notes: Pick<Note, 'id' | 'order' | 'title'>[] }
+type NotebookWithNotes = Notebook & { notes: Pick<Note, 'icon' | 'id' | 'order' | 'title'>[] }
 
 type NotebookWithNotesAndIsExpanded = NotebookWithNotes & { isExpanded: boolean }
 

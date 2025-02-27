@@ -40,6 +40,7 @@ export const notebookRouter = createTRPCRouter({
                 order: 'desc',
               },
               select: {
+                icon: true,
                 id: true,
                 order: true,
                 title: true,

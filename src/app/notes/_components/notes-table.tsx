@@ -169,6 +169,7 @@ export function NotesTable() {
             <header className="flex flex-col">
               <h2 className="flex select-none items-center gap-1.5 text-sm text-primary-900">
                 {note.isStarred && <StarIcon className="size-3 shrink-0 text-yellow-500" fill="currentColor" />}
+                {note.icon !== '' && <span>{note.icon}</span>}
 
                 <span className="truncate" style={{ direction: 'ltr' }}>
                   {note.title}

@@ -10,6 +10,7 @@ import { Home01Icon, Note01Icon, NotebookIcon } from 'hugeicons-react'
 import { useParams } from 'next/navigation'
 import { useEffect, useMemo, useRef } from 'react'
 
+import { Icon } from '~/app/notes/[noteId]/_components/Icon'
 import Editor from '~/features/editor'
 
 export default function NotePage() {
@@ -71,7 +72,7 @@ export default function NotePage() {
 
   return (
     <ScrollShadow className="grid h-full grid-cols-1 grid-rows-[332px_1fr] gap-12 focus-visible:outline-none" hideScrollBar>
-      <header className="mx-auto grid max-w-[1024px] grid-cols-1 grid-rows-[40px_192px_36px_64px] px-8">
+      <header className="group/header mx-auto grid max-w-[1024px] grid-cols-1 grid-rows-[40px_192px_36px_64px] px-8">
         <div className="flex h-10 items-center justify-center">
           {!isLoadingNote && (
             <Breadcrumbs
@@ -110,9 +111,7 @@ export default function NotePage() {
           />
         )}
 
-        <div className="relative mx-auto w-[800px]">
-          {!isLoadingNote && <span className="absolute bottom-0 z-10 block size-[72px] select-none text-7xl">🏕️</span>}
-        </div>
+        <div className="group/icon relative mx-auto w-[800px]">{!isLoadingNote && note && <Icon note={note} />}</div>
 
         {isLoadingNote ? (
           <Skeleton className="mx-auto h-16 w-[800px] rounded-medium" classNames={{ base: '!bg-base-default' }} />

@@ -11,7 +11,7 @@ import { cn } from '~/utils/cn'
 
 interface NoteItemProps {
   isOverlay?: boolean
-  note: Pick<Note, 'id' | 'order' | 'title'>
+  note: Pick<Note, 'icon' | 'id' | 'order' | 'title'>
 }
 
 export function NoteItem({ isOverlay, note }: NoteItemProps) {
@@ -50,6 +50,8 @@ export function NoteItem({ isOverlay, note }: NoteItemProps) {
       {...attributes}
       {...listeners}
     >
+      {note.icon !== '' && <span>{note.icon}</span>}
+
       <span className="truncate" style={{ direction: 'ltr' }}>
         {note.title}
       </span>

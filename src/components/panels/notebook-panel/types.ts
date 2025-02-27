@@ -9,7 +9,7 @@ type NotebookDragData = {
 }
 
 type NoteDragData = {
-  note: Pick<Note, 'id' | 'order' | 'title'>
+  note: Pick<Note, 'icon' | 'id' | 'order' | 'title'>
   type: 'Note'
 }
 
