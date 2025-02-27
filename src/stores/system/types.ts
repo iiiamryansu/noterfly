@@ -1,4 +1,5 @@
 type SystemActions = {
+  resetSystemStates: () => void
   setSidebarMode: (mode: SystemStates['sidebarMode']) => void
 }
 

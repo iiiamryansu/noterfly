@@ -1,6 +1,8 @@
 import type { NoteActions, NoteStore, NoteWithNotebook } from '@stores/note/types'
 import type { StateCreator } from 'zustand'
 
+import { initialStates } from '@stores/note/states'
+
 const noteActions: StateCreator<NoteStore, [], [], NoteActions> = (set, get) => ({
   getSortedNotes: () => {
     const notes = get().notes
@@ -15,6 +17,8 @@ const noteActions: StateCreator<NoteStore, [], [], NoteActions> = (set, get) => 
       return sortDescriptor.direction === 'descending' ? -cmp : cmp
     })
   },
+
+  resetNoteStates: () => set(initialStates),
 
   setIsLoadingNotes: (state) => set({ isLoadingNotes: state }),
 

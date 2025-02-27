@@ -1,7 +1,11 @@
 import type { NotebookActions, NotebookStore } from '@stores/notebook/types'
 import type { StateCreator } from 'zustand'
 
+import { initialStates } from '@stores/notebook/states'
+
 const notebookActions: StateCreator<NotebookStore, [], [], NotebookActions> = (set) => ({
+  resetNotebookStates: () => set(initialStates),
+
   setIsLoadingNotebooks: (state) => set({ isLoadingNotebooks: state }),
 
   setNotebooks: (notebooks) => {

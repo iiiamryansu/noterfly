@@ -1,6 +1,6 @@
 import type { NoteStates } from '@stores/note/types'
 
-const initialState: NoteStates = {
+const initialStates: NoteStates = {
   isLoadingNotes: false,
   notes: [],
   sortDescriptor: {
@@ -9,4 +9,4 @@ const initialState: NoteStates = {
   },
 }
 
-export { initialState }
+export { initialStates }

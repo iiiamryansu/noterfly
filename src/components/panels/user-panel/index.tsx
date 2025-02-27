@@ -5,6 +5,8 @@ import { Avatar } from '@heroui/avatar'
 import { Button } from '@heroui/button'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@heroui/dropdown'
 import { User } from '@heroui/user'
+import { useNoteStore } from '@stores/note'
+import { useNotebookStore } from '@stores/notebook'
 import { useSystemStore } from '@stores/system'
 import { useUserStore } from '@stores/user'
 import { ArrowDown01Icon, LinkBackwardIcon, LogoutSquare01Icon, Search01Icon, UserAccountIcon } from 'hugeicons-react'
@@ -12,13 +14,30 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 
 export default function UserPanel() {
-  const currentUser = useUserStore((state) => state.currentUser)
+  const { currentUser, resetUserStates } = useUserStore()
 
-  const { setSidebarMode, sidebarMode } = useSystemStore()
+  const { resetSystemStates, setSidebarMode, sidebarMode } = useSystemStore()
+  const { resetNoteStates } = useNoteStore()
+  const { resetNotebookStates } = useNotebookStore()
 
   const router = useRouter()
 
   const t = useTranslations('Layout.Sidebar.UserPanel')
+
+  async function handleSignOut() {
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          resetSystemStates()
+          resetUserStates()
+          resetNotebookStates()
+          resetNoteStates()
+
+          router.push('/auth/sign-in')
+        },
+      },
+    })
+  }
 
   return (
     <section className="flex justify-between">
@@ -83,15 +102,7 @@ export default function UserPanel() {
               className="data-[hover=true]:text-danger-500"
               endContent={<LogoutSquare01Icon className="size-4" />}
               key="logout"
-              onPress={async () => {
-                await signOut({
-                  fetchOptions: {
-                    onSuccess: () => {
-                      router.push('/auth/sign-in')
-                    },
-                  },
-                })
-              }}
+              onPress={handleSignOut}
             >
               {t('sign-out')}
             </DropdownItem>

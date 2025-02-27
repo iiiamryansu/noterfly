@@ -3,6 +3,7 @@ import type { Note, Notebook } from '@prisma/client'
 
 type NoteActions = {
   getSortedNotes: () => NoteWithNotebook[]
+  resetNoteStates: () => void
   setIsLoadingNotes: (isLoadingNotes: boolean) => void
   setNotes: (notes: NoteWithNotebook[]) => void
   setSortDescriptor: (sortDescriptor: SortDescriptor) => void

@@ -1,6 +1,7 @@
 import type { Note, Notebook } from '@prisma/client'
 
 type NotebookActions = {
+  resetNotebookStates: () => void
   setIsLoadingNotebooks: (isLoadingNotebooks: boolean) => void
   setNotebooks: (notebooks: NotebookWithNotes[]) => void
   toggleNotebook: (notebookId: NotebookWithNotesAndIsExpanded['id']) => void

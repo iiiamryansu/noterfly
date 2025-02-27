@@ -1,7 +1,7 @@
 import type { SystemStates } from '@stores/system/types'
 
-const initialState: SystemStates = {
+const initialStates: SystemStates = {
   sidebarMode: 'normal',
 }
 
-export { initialState }
+export { initialStates }

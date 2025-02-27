@@ -1,14 +1,14 @@
 import type { UserStore } from '@stores/user/types'
 
 import { userActions } from '@stores/user/actions'
-import { initialState } from '@stores/user/states'
+import { initialStates } from '@stores/user/states'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 const useUserStore = create<UserStore>()(
   persist(
     (set, get, api) => ({
-      ...initialState,
+      ...initialStates,
       ...userActions(set, get, api),
     }),
     {

@@ -1,7 +1,11 @@
 import type { UserActions, UserStore } from '@stores/user/types'
 import type { StateCreator } from 'zustand'
 
+import { initialStates } from '@stores/user/states'
+
 const userActions: StateCreator<UserStore, [], [], UserActions> = (set, get) => ({
+  resetUserStates: () => set(initialStates),
+
   setCurrentUser: (user) => set({ currentUser: user }),
 
   updateCurrentUser: (user) => {

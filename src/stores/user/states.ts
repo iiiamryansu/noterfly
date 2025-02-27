@@ -1,7 +1,7 @@
 import type { UserStates } from '@stores/user/types'
 
-const initialState: UserStates = {
+const initialStates: UserStates = {
   currentUser: null,
 }
 
-export { initialState }
+export { initialStates }

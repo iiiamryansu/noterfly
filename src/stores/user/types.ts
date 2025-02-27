@@ -1,6 +1,7 @@
 import type { User } from '@auth/c'
 
 type UserActions = {
+  resetUserStates: () => void
   setCurrentUser: (user: User) => void
   updateCurrentUser: (user: Partial<User>) => void
 }
