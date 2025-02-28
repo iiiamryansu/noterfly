@@ -1,16 +1,15 @@
 'use client'
 
-import { BreadcrumbItem, Breadcrumbs } from '@heroui/breadcrumbs'
 import { Image } from '@heroui/image'
 import { ScrollShadow } from '@heroui/scroll-shadow'
 import { Skeleton } from '@heroui/skeleton'
 import { trpc } from '@trpc/c'
 import { debounce } from 'es-toolkit'
-import { Home01Icon, Note01Icon, NotebookIcon } from 'hugeicons-react'
 import { useParams } from 'next/navigation'
 import { useEffect, useMemo, useRef } from 'react'
 
 import { Icon } from '~/app/notes/[noteId]/_components/Icon'
+import { Navigation } from '~/app/notes/[noteId]/_components/Navigation'
 import Editor from '~/features/editor'
 
 export default function NotePage() {
@@ -73,24 +72,7 @@ export default function NotePage() {
   return (
     <ScrollShadow className="grid h-full grid-cols-1 grid-rows-[332px_1fr] gap-12 focus-visible:outline-none" hideScrollBar>
       <header className="group/header mx-auto grid max-w-[1024px] grid-cols-1 grid-rows-[40px_192px_36px_64px] px-8">
-        <div className="flex h-10 items-center justify-center">
-          {!isLoadingNote && (
-            <Breadcrumbs
-              classNames={{ base: ['flex', 'justify-center', 'items-center'] }}
-              itemClasses={{
-                separator: ['text-[10px]', 'px-2'],
-              }}
-              separator="/"
-              size="sm"
-              variant="light"
-            >
-              <BreadcrumbItem startContent={<Home01Icon className="size-3" />}>Home</BreadcrumbItem>
-              <BreadcrumbItem startContent={<NotebookIcon className="size-3" />}>Projects</BreadcrumbItem>
-              <BreadcrumbItem startContent={<NotebookIcon className="size-3" />}>Noterfly</BreadcrumbItem>
-              <BreadcrumbItem startContent={<Note01Icon className="size-3" />}>How I increased my visibility</BreadcrumbItem>
-            </Breadcrumbs>
-          )}
-        </div>
+        <div className="flex h-10 items-center justify-center">{!isLoadingNote && note && <Navigation note={note} />}</div>
 
         {isLoadingNote ? (
           <Skeleton

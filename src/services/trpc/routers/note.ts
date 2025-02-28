@@ -142,6 +142,13 @@ export const noteRouter = createTRPCRouter({
     .query(async ({ ctx: { userId }, input: { noteId } }) => {
       try {
         const note = await prisma.note.findUnique({
+          include: {
+            notebook: {
+              select: {
+                name: true,
+              },
+            },
+          },
           where: {
             id: noteId,
             isDeleted: false,
