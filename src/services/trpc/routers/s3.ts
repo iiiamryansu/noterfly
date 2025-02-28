@@ -13,7 +13,7 @@ export const s3Router = createTRPCRouter({
   getSignedUrl: authedProcedure
     .input(
       z.object({
-        type: z.enum(['avatar', 'image']),
+        type: z.enum(['avatar', 'image', 'cover']),
       }),
     )
     .output(
@@ -30,6 +30,8 @@ export const s3Router = createTRPCRouter({
           path = `users/${userId}/avatars/${uuid()}`
         } else if (input.type === 'image') {
           path = `users/${userId}/files/images/${uuid()}`
+        } else if (input.type === 'cover') {
+          path = `users/${userId}/files/covers/${uuid()}`
         }
 
         const url = `${env.CLOUDFLARE_R2_PUBLIC_URL}/${path}`

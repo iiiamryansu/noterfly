@@ -92,6 +92,7 @@ model Note {
   id String @id @default(uuid())
 
   icon    String @default("")
+  cover   String @default("/default/cover.png")
   title   String
   content String
 

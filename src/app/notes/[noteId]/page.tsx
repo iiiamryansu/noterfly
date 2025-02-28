@@ -1,6 +1,5 @@
 'use client'
 
-import { Image } from '@heroui/image'
 import { ScrollShadow } from '@heroui/scroll-shadow'
 import { Skeleton } from '@heroui/skeleton'
 import { trpc } from '@trpc/c'
@@ -8,6 +7,7 @@ import { debounce } from 'es-toolkit'
 import { useParams } from 'next/navigation'
 import { useEffect, useMemo, useRef } from 'react'
 
+import { Cover } from '~/app/notes/[noteId]/_components/Cover'
 import { Icon } from '~/app/notes/[noteId]/_components/Icon'
 import { Navigation } from '~/app/notes/[noteId]/_components/Navigation'
 import Editor from '~/features/editor'
@@ -82,15 +82,7 @@ export default function NotePage() {
             }}
           />
         ) : (
-          <Image
-            alt="Default banner"
-            className="object-cover"
-            height={192}
-            loading="eager"
-            radius="md"
-            src="/default/banner.png"
-            width={1024}
-          />
+          note && <Cover note={note} />
         )}
 
         <div className="group/icon relative mx-auto w-[800px]">{!isLoadingNote && note && <Icon note={note} />}</div>
